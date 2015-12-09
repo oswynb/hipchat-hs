@@ -1,0 +1,8 @@
+/tags
+/dist/
+/cabal.sandbox.config
+/cabal.config
+/.cabal-sandbox
+/.stack-work
+/*.aes
+*.swp
