@@ -21,6 +21,6 @@ hipChatAPI = Proxy
 sendMessage :: Text -> Message -> Maybe String -> EitherT ServantError IO SendMessageResponse
 getRoomStatistics :: Text -> Maybe String -> EitherT ServantError IO RoomStatistics
 
-sendMessage :<|> getRoomStatistics = client hipChatAPI host
+sendMessage :<|> getRoomStatistics :<|> generateToken = client hipChatAPI host
   where
     host = BaseUrl Https "api.hipchat.com" 443

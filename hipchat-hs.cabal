@@ -19,12 +19,15 @@ library
   exposed-modules:     Network.HipChat.Client
                        Network.HipChat.Types.API
                        Network.HipChat.Types.Rooms
+                       Network.HipChat.Types.TokenRequest
+                       Network.HipChat.Types.TokenResponse
   -- other-modules:       
   -- other-extensions:    
   build-depends:       base >= 4.8 && < 4.9
                      , aeson
                      , bytestring
                      , either
+                     , lens
                      , servant
                      , servant-client
                      , string-conversions
