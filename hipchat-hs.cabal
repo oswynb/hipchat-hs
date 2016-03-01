@@ -25,6 +25,7 @@ library
                        Network.Hipchat.Types.Rooms.CreateRoomResponse
                        Network.Hipchat.Types.Rooms.CreateWebhookRequest
                        Network.Hipchat.Types.Rooms.CreateWebhookResponse
+                       Network.Hipchat.Types.Rooms.GetAllMembersResponse
                        Network.Hipchat.Types.TokenRequest
                        Network.Hipchat.Types.TokenResponse
                        Network.Hipchat.Types.User

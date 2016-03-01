@@ -28,7 +28,7 @@ getRoomStatistics :: Maybe Token -> Text -> EitherT ServantError IO RoomStatisti
 generateToken     :: Maybe Token -> TokenRequest -> EitherT ServantError IO TokenResponse
 viewUser          :: Maybe Token -> Text -> EitherT ServantError IO User
 createWebhook     :: Maybe Token -> IdOrName -> WebhookKey -> CreateWebhookRequest -> EitherT ServantError IO CreateWebhookResponse
-
-sendMessage :<|> createRoom :<|> getRoomStatistics :<|> generateToken :<|> viewUser :<|> createWebhook = client hipChatAPI host
+getAllMembers     :: Maybe Token -> IdOrName -> Maybe Int -> Maybe Int -> EitherT ServantError IO GetAllMembersResponse
+sendMessage :<|> createRoom :<|> getRoomStatistics :<|> generateToken :<|> viewUser :<|> createWebhook :<|> getAllMembers = client hipChatAPI host
   where
     host = BaseUrl Https "api.hipchat.com" 443

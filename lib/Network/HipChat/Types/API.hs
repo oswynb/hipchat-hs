@@ -20,19 +20,8 @@ type HipchatAPI =
   :<|> GenerateToken
   :<|> ViewUser
   :<|> CreateWebhook
+  :<|> GetAllMembers
 
-type SendMessage = TokenAuth (
-    "v2" :> "room"
- :> Capture "room" Text
- :> "message"
- :> ReqBody '[JSON] Message
- :> Post '[JSON] SendMessageResponse)
-
-type GetRoomStatistics = TokenAuth (
-    "v2" :> "room"
- :> Capture "room" Text
- :> "statistics"
- :> Get '[JSON] RoomStatistics)
 
 type GenerateToken = TokenAuth (
     "v2" :> "oauth" :> "token"
@@ -61,3 +50,24 @@ type CreateWebhook = TokenAuth (
  :> Capture "key" WebhookKey
  :> ReqBody '[JSON] CreateWebhookRequest
  :> Put '[JSON] CreateWebhookResponse)
+
+type SendMessage = TokenAuth (
+    "v2" :> "room"
+ :> Capture "room" Text
+ :> "message"
+ :> ReqBody '[JSON] Message
+ :> Post '[JSON] SendMessageResponse)
+
+type GetRoomStatistics = TokenAuth (
+    "v2" :> "room"
+ :> Capture "room" Text
+ :> "statistics"
+ :> Get '[JSON] RoomStatistics)
+
+type GetAllMembers = TokenAuth (
+    "v2" :> "room"
+  :> Capture "room_id_or_name" IdOrName
+  :> "member"
+  :> QueryParam "start-index" Int
+  :> QueryParam "max-results" Int
+  :> Get '[JSON] GetAllMembersResponse)

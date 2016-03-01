@@ -13,6 +13,8 @@ module Network.Hipchat.Types.Common
   , Token(..)
   , TokenAuth
   , IdOrName(..)
+  , Link(..)
+  , PaginatedLink(..)
   ) where
 
 import           Data.Aeson
@@ -31,6 +33,22 @@ genericHipchatParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier
 
 processField :: Int -> String -> String
 processField len x = camelTo '_' $  drop len x
+
+data Link = Link
+  { linkSelf :: Text
+  } deriving (Generic, Show)
+
+instance FromJSON Link where
+  parseJSON = genericHipchatParseJSON 4
+
+data PaginatedLink = PaginatedLink
+  { plSelf :: Text
+  , plPrev :: Maybe Text
+  , plNext :: Maybe Text
+  } deriving (Generic, Show)
+
+instance FromJSON PaginatedLink where
+  parseJSON = genericHipchatParseJSON 2
 
 data WebhookAuth = JWT
                  | None

@@ -19,6 +19,8 @@ module Network.Hipchat.Types.Rooms
   , SendMessageResponse(..)
   , RoomStatistics(..)
   , WebhookKey(..)
+  , GetAllMembersResponse(..)
+  , UserItem(..)
   ) where
 
 import           Data.Aeson
@@ -30,6 +32,7 @@ import           Network.Hipchat.Types.Rooms.CreateRoomRequest
 import           Network.Hipchat.Types.Rooms.CreateRoomResponse
 import           Network.Hipchat.Types.Rooms.CreateWebhookRequest
 import           Network.Hipchat.Types.Rooms.CreateWebhookResponse
+import           Network.Hipchat.Types.Rooms.GetAllMembersResponse
 
 
 newtype Message = Message {
