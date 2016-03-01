@@ -24,11 +24,12 @@ import           GHC.Generics
 import           Servant.API
 
 genericHipchatToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
-genericHipchatToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processField len}
+genericHipchatToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processField len, omitNothingFields = True}
 
 genericHipchatParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
 genericHipchatParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processField len}
 
+processField :: Int -> String -> String
 processField len x = camelTo '_' $  drop len x
 
 data WebhookAuth = JWT

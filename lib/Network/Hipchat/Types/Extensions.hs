@@ -8,13 +8,38 @@ import Data.Char
 import GHC.Generics
 import           Data.Text (Text)
 
-data Capabilities = Capabilities
-  {
+import Network.Hipchat.Types.Common
+
+type AddonAction = ()
+
+data CapabilitiesAdminPage = CapabilitiesAdminPage
+  { capUrl :: Text
+  } deriving (Generic, Show)
+
+instance ToJSON CapabilitiesAdminPage where
+  toJSON = genericHipchatToJSON 3
+
+data CapabilitiesInstallable = CapabilitiesInstallable
+  { ciAllowGlobal :: Maybe Bool
+  , ciAllowRoom   :: Maybe Bool
 
   } deriving (Generic, Show)
 
+instance ToJSON CapabilitiesInstallable
+
+data Capabilities = Capabilities
+  { cAction    :: Maybe [AddonAction]
+  , cAdminPage :: Maybe CapabilitiesAdminPage
+  , cConfigurable :: Maybe ()
+  , cDialog :: Maybe [()]
+  , cExternalPage :: Maybe [()]
+  , cGlance :: Maybe [()]
+  , cHipchatApiConsumer :: Maybe ()
+  , cInstallable :: Maybe CapabilitiesInstallable
+  } deriving (Generic, Show)
+
 instance ToJSON Capabilities where
-  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 1 x in toLower y:ys}
+  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 1 x in toLower y:ys, omitNothingFields = True}
 
 
 data CapabilitiesLinks = CapabilitiesLinks
