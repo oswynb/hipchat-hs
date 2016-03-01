@@ -4,15 +4,11 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE TypeOperators         #-}
 
-module Network.HipChat.Types.TokenResponse where
+module Network.Hipchat.Types.TokenResponse where
 
 import           Data.Aeson
-import           Data.String
-import           Data.String.Conversions
 import           Data.Text               (Text)
 import           GHC.Generics
-
-import           Servant.API
 
 data TokenResponse = TokenResponse
   { access_token  :: Text

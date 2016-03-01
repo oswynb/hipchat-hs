@@ -4,7 +4,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE TypeOperators         #-}
 
-module Network.HipChat.Types.TokenRequest where
+module Network.Hipchat.Types.TokenRequest where
 
 import           Control.Lens
 import           Data.Aeson

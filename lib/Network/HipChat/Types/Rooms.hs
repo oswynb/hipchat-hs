@@ -6,15 +6,31 @@
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TypeOperators              #-}
 
-module Network.HipChat.Types.Rooms where
+module Network.Hipchat.Types.Rooms
+  ( CreateRoomRequest(..)
+  , CreateRoomResponse(..)
+  , CreateRoomResponseLinks(..)
+  , Message(..)
+  , RoomEvent(..)
+  , CreateWebhookRequest(..)
+  , createWebhookRequest
+  , CreateWebhookResponse(..)
+  , CreateWebhookResponseLinks(..)
+  , SendMessageResponse(..)
+  , RoomStatistics(..)
+  , WebhookKey(..)
+  ) where
 
 import           Data.Aeson
 import           Data.String
-import           Data.String.Conversions
-import           Data.Text               (Text)
+import           Data.Text                                         (Text)
 import           GHC.Generics
 
-import           Servant.API
+import           Network.Hipchat.Types.Rooms.CreateRoomRequest
+import           Network.Hipchat.Types.Rooms.CreateRoomResponse
+import           Network.Hipchat.Types.Rooms.CreateWebhookRequest
+import           Network.Hipchat.Types.Rooms.CreateWebhookResponse
+
 
 newtype Message = Message {
   message :: Text

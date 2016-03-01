@@ -1,37 +1,63 @@
 {-# LANGUAGE DataKinds     #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Network.HipChat.Types.API where
+module Network.Hipchat.Types.API where
 
 import           Data.Text                           (Text)
 
 import           Servant.API
 
-import           Network.HipChat.Types.Rooms
-import           Network.HipChat.Types.TokenRequest
-import           Network.HipChat.Types.TokenResponse
+import           Network.Hipchat.Types.Common
+import           Network.Hipchat.Types.Rooms
+import           Network.Hipchat.Types.TokenRequest
+import           Network.Hipchat.Types.TokenResponse
+import           Network.Hipchat.Types.User
 
-type TokenAuth = QueryParam "auth_token" String
-
-type HipChatAPI =
+type HipchatAPI =
        SendMessage
+  :<|> CreateRoom
   :<|> GetRoomStatistics
   :<|> GenerateToken
+  :<|> ViewUser
+  :<|> CreateWebhook
 
-type SendMessage =
-    "v2" :> "room" :> Capture "room" Text :> "message"
+type SendMessage = TokenAuth (
+    "v2" :> "room"
+ :> Capture "room" Text
+ :> "message"
  :> ReqBody '[JSON] Message
- :> TokenAuth
- :> Post '[JSON] SendMessageResponse
+ :> Post '[JSON] SendMessageResponse)
 
+type GetRoomStatistics = TokenAuth (
+    "v2" :> "room"
+ :> Capture "room" Text
+ :> "statistics"
+ :> Get '[JSON] RoomStatistics)
 
-type GetRoomStatistics =
-    "v2" :> "room" :> Capture "room" Text :> "statistics"
- :> TokenAuth
- :> Get '[JSON] RoomStatistics
-
-type GenerateToken =
+type GenerateToken = TokenAuth (
     "v2" :> "oauth" :> "token"
   :> ReqBody '[JSON] TokenRequest
-  :> TokenAuth
-  :> Post '[JSON] TokenResponse
+  :> Post '[JSON] TokenResponse)
+
+type ViewUser = TokenAuth (
+    "v2" :> "user"
+ :> Capture "id_or_email" Text
+ :> Get '[JSON] User)
+
+--------------------------------------------------------------------------------
+--
+-- Rooms
+
+type CreateRoom = TokenAuth (
+    "v2" :> "room"
+ :> ReqBody '[JSON] CreateRoomRequest
+ :> Post '[JSON] CreateRoomResponse)
+
+type CreateWebhook = TokenAuth (
+    "v2" :> "room"
+ :> Capture "room_id_or_name" IdOrName
+ :> "extension"
+ :> "webhook"
+ :> Capture "key" WebhookKey
+ :> ReqBody '[JSON] CreateWebhookRequest
+ :> Put '[JSON] CreateWebhookResponse)
