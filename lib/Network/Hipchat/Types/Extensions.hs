@@ -19,13 +19,20 @@ data CapabilitiesAdminPage = CapabilitiesAdminPage
 instance ToJSON CapabilitiesAdminPage where
   toJSON = genericHipchatToJSON 3
 
+instance FromJSON CapabilitiesAdminPage where
+  parseJSON = genericHipchatParseJSON 3
+
 data CapabilitiesInstallable = CapabilitiesInstallable
   { ciAllowGlobal :: Maybe Bool
   , ciAllowRoom   :: Maybe Bool
 
   } deriving (Generic, Show)
 
-instance ToJSON CapabilitiesInstallable
+instance ToJSON CapabilitiesInstallable where
+  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
+
+instance FromJSON CapabilitiesInstallable where
+  parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
 
 data Capabilities = Capabilities
   { cAction    :: Maybe [AddonAction]
@@ -41,6 +48,8 @@ data Capabilities = Capabilities
 instance ToJSON Capabilities where
   toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 1 x in toLower y:ys, omitNothingFields = True}
 
+instance FromJSON Capabilities where
+  parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 1 x in toLower y:ys, omitNothingFields = True}
 
 data CapabilitiesLinks = CapabilitiesLinks
   { clHomepage :: Maybe Text
@@ -51,7 +60,10 @@ capabilitiesLinks :: Text -> CapabilitiesLinks
 capabilitiesLinks self = CapabilitiesLinks Nothing self
 
 instance ToJSON CapabilitiesLinks where
-  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys}
+  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
+
+instance FromJSON CapabilitiesLinks where
+  parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
 
 data CapabilitiesVendor = CapabilitiesVendor
   {
@@ -59,7 +71,10 @@ data CapabilitiesVendor = CapabilitiesVendor
   } deriving (Generic, Show)
 
 instance ToJSON CapabilitiesVendor where
-  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys}
+  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
+
+instance FromJSON CapabilitiesVendor where
+  parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
 
 data CapabilitiesDescriptor = CapabilitiesDescriptor
   { cdApiVersion   :: Maybe Text
@@ -75,4 +90,7 @@ capabilitiesDescriptor :: Text -> Text -> CapabilitiesLinks -> Text -> Capabilit
 capabilitiesDescriptor desc key links name = CapabilitiesDescriptor Nothing Nothing desc key links name Nothing
 
 instance ToJSON CapabilitiesDescriptor where
-  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys}
+  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
+
+instance FromJSON CapabilitiesDescriptor where
+  parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}

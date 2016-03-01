@@ -14,7 +14,7 @@ import Network.Hipchat.Types.Common
 data UserItem = UserItem
   { uiMentionName :: Text
   , uiVersion :: Text
-  , uiId :: Int 
+  , uiId :: Int
   , uiLinks :: Maybe Link
   , uiName :: Text
   } deriving (Generic, Show)
