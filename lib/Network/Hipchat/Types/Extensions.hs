@@ -25,7 +25,11 @@ instance FromJSON CapabilitiesAdminPage where
 data CapabilitiesInstallable = CapabilitiesInstallable
   { ciAllowGlobal :: Maybe Bool
   , ciAllowRoom   :: Maybe Bool
-
+  -- | The URL to receive a confirmation of an integration installation. The message will be an HTTP POST with the
+  --   following fields in a JSON-encoded body: 'capabilitiesUrl', 'oauthId', 'oauthSecret', and optionally 'roomId'.
+  --   The installation of the integration will only succeed if the POST response is a 200.
+  , ciCallbackUrl :: Maybe Text
+ -- , ciInstalledUrl :: Maybe Text
   } deriving (Generic, Show)
 
 instance ToJSON CapabilitiesInstallable where
@@ -41,7 +45,7 @@ data Capabilities = Capabilities
   , cDialog :: Maybe [()]
   , cExternalPage :: Maybe [()]
   , cGlance :: Maybe [()]
-  , cHipchatApiConsumer :: Maybe ()
+  , cHipchatApiConsumer :: Maybe HipchatApiConsumer
   , cInstallable :: Maybe CapabilitiesInstallable
   } deriving (Generic, Show)
 
@@ -50,6 +54,18 @@ instance ToJSON Capabilities where
 
 instance FromJSON Capabilities where
   parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 1 x in toLower y:ys, omitNothingFields = True}
+
+data HipchatApiConsumer = HipchatApiConsumer
+  { hacAvatar   :: Maybe Text
+  , hacFromName :: Maybe Text
+  , hacScopes   :: [Text]
+  } deriving (Generic, Show)
+
+instance ToJSON HipchatApiConsumer where
+  toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 3 x in toLower y:ys, omitNothingFields = True}
+
+instance FromJSON HipchatApiConsumer where
+  parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 3 x in toLower y:ys, omitNothingFields = True}
 
 data CapabilitiesLinks = CapabilitiesLinks
   { clHomepage :: Maybe Text
