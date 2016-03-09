@@ -66,6 +66,7 @@ instance ToText Token where
   toText (Token tok) = "Bearer " <> tok
 
 type family TokenAuth a where
+  TokenAuth (x :<|> y) = TokenAuth x :<|> TokenAuth y
   TokenAuth x = Header "Authorization" Token :> x
 
 newtype IdOrName = IdOrName Text
