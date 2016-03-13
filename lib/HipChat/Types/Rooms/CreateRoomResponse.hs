@@ -1,12 +1,12 @@
 {-# LANGUAGE DeriveGeneric #-}
 
-module Network.Hipchat.Types.Rooms.CreateRoomResponse where
+module HipChat.Types.Rooms.CreateRoomResponse where
 
 import           Data.Aeson
-import           Data.Text                    (Text)
+import           Data.Text            (Text)
 import           GHC.Generics
 
-import           Network.Hipchat.Types.Common
+import           HipChat.Types.Common
 
 data CreateRoomResponse = CreateRoomResponse
   { crrId    :: IdOrName
@@ -18,7 +18,7 @@ data CreateRoomResponseLinks = CreateRoomResponseLinks
   } deriving (Generic, Show)
 
 instance FromJSON CreateRoomResponse where
-  parseJSON = genericHipchatParseJSON 3
+  parseJSON = genericHipChatParseJSON 3
 
 instance FromJSON CreateRoomResponseLinks where
-  parseJSON = genericHipchatParseJSON 4
+  parseJSON = genericHipChatParseJSON 4

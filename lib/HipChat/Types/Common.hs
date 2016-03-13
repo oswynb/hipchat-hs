@@ -6,9 +6,9 @@
 {-# LANGUAGE TypeFamilies               #-}
 {-# LANGUAGE TypeOperators              #-}
 
-module Network.Hipchat.Types.Common
-  ( genericHipchatToJSON
-  , genericHipchatParseJSON
+module HipChat.Types.Common
+  ( genericHipChatToJSON
+  , genericHipChatParseJSON
   , WebhookAuth(..)
   , Token(..)
   , TokenAuth
@@ -25,11 +25,11 @@ import           Data.Text        (Text)
 import           GHC.Generics
 import           Servant.API
 
-genericHipchatToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
-genericHipchatToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processField len, omitNothingFields = True}
+genericHipChatToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
+genericHipChatToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processField len, omitNothingFields = True}
 
-genericHipchatParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
-genericHipchatParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processField len}
+genericHipChatParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
+genericHipChatParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processField len}
 
 processField :: Int -> String -> String
 processField len x = camelTo '_' $  drop len x
@@ -39,7 +39,7 @@ data Link = Link
   } deriving (Generic, Show)
 
 instance FromJSON Link where
-  parseJSON = genericHipchatParseJSON 4
+  parseJSON = genericHipChatParseJSON 4
 
 data PaginatedLink = PaginatedLink
   { plSelf :: Text
@@ -48,7 +48,7 @@ data PaginatedLink = PaginatedLink
   } deriving (Generic, Show)
 
 instance FromJSON PaginatedLink where
-  parseJSON = genericHipchatParseJSON 2
+  parseJSON = genericHipChatParseJSON 2
 
 data WebhookAuth = JWT
                  | None

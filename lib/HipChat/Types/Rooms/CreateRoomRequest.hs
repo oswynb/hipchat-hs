@@ -1,13 +1,13 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Network.Hipchat.Types.Rooms.CreateRoomRequest where
+module HipChat.Types.Rooms.CreateRoomRequest where
 
 import           Data.Aeson
-import           Data.Text                    (Text)
+import           Data.Text            (Text)
 import           GHC.Generics
 
-import           Network.Hipchat.Types.Common
+import           HipChat.Types.Common
 
 data RoomPrivacy = Public
                  | Private
@@ -26,4 +26,4 @@ data CreateRoomRequest = CreateRoomRequest
   } deriving (Generic)
 
 instance ToJSON CreateRoomRequest where
-  toJSON = genericHipchatToJSON 3
+  toJSON = genericHipChatToJSON 3

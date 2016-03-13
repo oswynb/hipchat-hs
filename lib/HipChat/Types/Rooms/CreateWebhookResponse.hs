@@ -1,12 +1,12 @@
 {-# LANGUAGE DeriveGeneric #-}
 
-module Network.Hipchat.Types.Rooms.CreateWebhookResponse where
+module HipChat.Types.Rooms.CreateWebhookResponse where
 
 import           Data.Aeson
-import           Data.Text                    (Text)
+import           Data.Text            (Text)
 import           GHC.Generics
 
-import           Network.Hipchat.Types.Common
+import           HipChat.Types.Common
 
 data CreateWebhookResponse = CreateWebhookResponse
   { cwrId    :: Either String Int
@@ -18,7 +18,7 @@ data CreateWebhookResponseLinks = CreateWebhookResponseLinks
   } deriving (Generic, Show)
 
 instance FromJSON CreateWebhookResponse where
-  parseJSON = genericHipchatParseJSON 3
+  parseJSON = genericHipChatParseJSON 3
 
 instance FromJSON CreateWebhookResponseLinks where
-  parseJSON = genericHipchatParseJSON 4
+  parseJSON = genericHipChatParseJSON 4

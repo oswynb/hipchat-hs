@@ -1,19 +1,19 @@
 {-# LANGUAGE DataKinds     #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Network.Hipchat.Types.API where
+module HipChat.Types.API where
 
-import           Data.Text                           (Text)
+import           Data.Text                   (Text)
 
 import           Servant.API
 
-import           Network.Hipchat.Types.Common
-import           Network.Hipchat.Types.Rooms
-import           Network.Hipchat.Types.TokenRequest
-import           Network.Hipchat.Types.TokenResponse
-import           Network.Hipchat.Types.User
+import           HipChat.Types.Common
+import           HipChat.Types.Rooms
+import           HipChat.Types.TokenRequest
+import           HipChat.Types.TokenResponse
+import           HipChat.Types.User
 
-type HipchatAPI = TokenAuth(
+type HipChatAPI = TokenAuth(
        SendMessage
   :<|> CreateRoom
   :<|> GetRoomStatistics

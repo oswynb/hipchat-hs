@@ -6,7 +6,7 @@
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TypeOperators              #-}
 
-module Network.Hipchat.Types.Rooms
+module HipChat.Types.Rooms
   ( CreateRoomRequest(..)
   , CreateRoomResponse(..)
   , CreateRoomResponseLinks(..)
@@ -25,14 +25,14 @@ module Network.Hipchat.Types.Rooms
 
 import           Data.Aeson
 import           Data.String
-import           Data.Text                                         (Text)
+import           Data.Text                                 (Text)
 import           GHC.Generics
 
-import           Network.Hipchat.Types.Rooms.CreateRoomRequest
-import           Network.Hipchat.Types.Rooms.CreateRoomResponse
-import           Network.Hipchat.Types.Rooms.CreateWebhookRequest
-import           Network.Hipchat.Types.Rooms.CreateWebhookResponse
-import           Network.Hipchat.Types.Rooms.GetAllMembersResponse
+import           HipChat.Types.Rooms.CreateRoomRequest
+import           HipChat.Types.Rooms.CreateRoomResponse
+import           HipChat.Types.Rooms.CreateWebhookRequest
+import           HipChat.Types.Rooms.CreateWebhookResponse
+import           HipChat.Types.Rooms.GetAllMembersResponse
 
 
 newtype Message = Message {

@@ -16,19 +16,20 @@ source-repository HEAD
   location: https://github.com/oswynb/hipchat-hs
 
 library
-  exposed-modules:     Network.Hipchat.Client
-                       Network.Hipchat.Types.API
-                       Network.Hipchat.Types.Common
-                       Network.Hipchat.Types.Extensions
-                       Network.Hipchat.Types.Rooms
-                       Network.Hipchat.Types.Rooms.CreateRoomRequest
-                       Network.Hipchat.Types.Rooms.CreateRoomResponse
-                       Network.Hipchat.Types.Rooms.CreateWebhookRequest
-                       Network.Hipchat.Types.Rooms.CreateWebhookResponse
-                       Network.Hipchat.Types.Rooms.GetAllMembersResponse
-                       Network.Hipchat.Types.TokenRequest
-                       Network.Hipchat.Types.TokenResponse
-                       Network.Hipchat.Types.User
+  exposed-modules:     HipChat.Client
+                       HipChat.Types.API
+                       HipChat.Types.Common
+                       HipChat.Types.Extensions
+                       HipChat.Types.I18n
+                       HipChat.Types.Rooms
+                       HipChat.Types.Rooms.CreateRoomRequest
+                       HipChat.Types.Rooms.CreateRoomResponse
+                       HipChat.Types.Rooms.CreateWebhookRequest
+                       HipChat.Types.Rooms.CreateWebhookResponse
+                       HipChat.Types.Rooms.GetAllMembersResponse
+                       HipChat.Types.TokenRequest
+                       HipChat.Types.TokenResponse
+                       HipChat.Types.User
   -- other-modules:       
   -- other-extensions:    
   build-depends:       base >= 4.8 && < 4.9

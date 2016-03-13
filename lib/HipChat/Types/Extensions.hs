@@ -1,14 +1,14 @@
 {-# LANGUAGE DeriveGeneric #-}
 
-module Network.Hipchat.Types.Extensions where
+module HipChat.Types.Extensions where
 
-import Data.Aeson
-import Data.Aeson.Types
-import Data.Char
-import GHC.Generics
-import           Data.Text (Text)
+import           Data.Aeson
+import           Data.Aeson.Types
+import           Data.Char
+import           Data.Text            (Text)
+import           GHC.Generics
 
-import Network.Hipchat.Types.Common
+import           HipChat.Types.Common
 
 type AddonAction = ()
 
@@ -17,10 +17,10 @@ data CapabilitiesAdminPage = CapabilitiesAdminPage
   } deriving (Generic, Show)
 
 instance ToJSON CapabilitiesAdminPage where
-  toJSON = genericHipchatToJSON 3
+  toJSON = genericHipChatToJSON 3
 
 instance FromJSON CapabilitiesAdminPage where
-  parseJSON = genericHipchatParseJSON 3
+  parseJSON = genericHipChatParseJSON 3
 
 data CapabilitiesInstallable = CapabilitiesInstallable
   { ciAllowGlobal :: Maybe Bool
@@ -39,14 +39,14 @@ instance FromJSON CapabilitiesInstallable where
   parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}
 
 data Capabilities = Capabilities
-  { cAction    :: Maybe [AddonAction]
-  , cAdminPage :: Maybe CapabilitiesAdminPage
-  , cConfigurable :: Maybe ()
-  , cDialog :: Maybe [()]
-  , cExternalPage :: Maybe [()]
-  , cGlance :: Maybe [()]
-  , cHipchatApiConsumer :: Maybe HipchatApiConsumer
-  , cInstallable :: Maybe CapabilitiesInstallable
+  { cAction             :: Maybe [AddonAction]
+  , cAdminPage          :: Maybe CapabilitiesAdminPage
+  , cConfigurable       :: Maybe ()
+  , cDialog             :: Maybe [()]
+  , cExternalPage       :: Maybe [()]
+  , cGlance             :: Maybe [()]
+  , cHipChatApiConsumer :: Maybe HipChatApiConsumer
+  , cInstallable        :: Maybe CapabilitiesInstallable
   } deriving (Generic, Show)
 
 instance ToJSON Capabilities where
@@ -55,21 +55,21 @@ instance ToJSON Capabilities where
 instance FromJSON Capabilities where
   parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 1 x in toLower y:ys, omitNothingFields = True}
 
-data HipchatApiConsumer = HipchatApiConsumer
+data HipChatApiConsumer = HipChatApiConsumer
   { hacAvatar   :: Maybe Text
   , hacFromName :: Maybe Text
   , hacScopes   :: [Text]
   } deriving (Generic, Show)
 
-instance ToJSON HipchatApiConsumer where
+instance ToJSON HipChatApiConsumer where
   toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 3 x in toLower y:ys, omitNothingFields = True}
 
-instance FromJSON HipchatApiConsumer where
+instance FromJSON HipChatApiConsumer where
   parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 3 x in toLower y:ys, omitNothingFields = True}
 
 data CapabilitiesLinks = CapabilitiesLinks
   { clHomepage :: Maybe Text
-  , clSelf :: Text
+  , clSelf     :: Text
   } deriving (Generic, Show)
 
 capabilitiesLinks :: Text -> CapabilitiesLinks

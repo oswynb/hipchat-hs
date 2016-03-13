@@ -1,16 +1,16 @@
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Network.Hipchat.Types.Rooms.CreateWebhookRequest where
+module HipChat.Types.Rooms.CreateWebhookRequest where
 
 import           Data.Aeson
 import           Data.Aeson.Types
 import           Data.String
-import           Data.Text                    (Text)
+import           Data.Text            (Text)
 import           GHC.Generics
 import           Servant.API
 
-import           Network.Hipchat.Types.Common
+import           HipChat.Types.Common
 
 data CreateWebhookRequest = CreateWebhookRequest
   { cwrName           :: Maybe Text
@@ -45,4 +45,4 @@ createWebhookRequest :: Text -> RoomEvent -> CreateWebhookRequest
 createWebhookRequest url event = CreateWebhookRequest Nothing url Nothing Nothing Nothing event
 
 instance ToJSON CreateWebhookRequest where
-  toJSON = genericHipchatToJSON 3
+  toJSON = genericHipChatToJSON 3

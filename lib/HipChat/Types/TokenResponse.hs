@@ -4,10 +4,10 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE TypeOperators         #-}
 
-module Network.Hipchat.Types.TokenResponse where
+module HipChat.Types.TokenResponse where
 
 import           Data.Aeson
-import           Data.Text               (Text)
+import           Data.Text    (Text)
 import           GHC.Generics
 
 data TokenResponse = TokenResponse

@@ -1,13 +1,13 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Network.Hipchat.Types.User where
+module HipChat.Types.User where
 
 import           Data.Aeson
-import           Data.Text                    (Text)
+import           Data.Text            (Text)
 import           GHC.Generics
 
-import           Network.Hipchat.Types.Common
+import           HipChat.Types.Common
 
 data User = User
   { userXmppJid    :: Text
@@ -18,4 +18,4 @@ data User = User
   } deriving (Generic, Show)
 
 instance FromJSON User where
-  parseJSON = genericHipchatParseJSON 4
+  parseJSON = genericHipChatParseJSON 4
