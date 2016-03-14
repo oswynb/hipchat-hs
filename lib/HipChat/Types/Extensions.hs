@@ -17,10 +17,10 @@ data CapabilitiesAdminPage = CapabilitiesAdminPage
   } deriving (Generic, Show)
 
 instance ToJSON CapabilitiesAdminPage where
-  toJSON = genericHipChatToJSON 3
+  toJSON = snakeToJSON 3
 
 instance FromJSON CapabilitiesAdminPage where
-  parseJSON = genericHipChatParseJSON 3
+  parseJSON = snakeParseJSON 3
 
 data CapabilitiesInstallable = CapabilitiesInstallable
   { ciAllowGlobal :: Maybe Bool

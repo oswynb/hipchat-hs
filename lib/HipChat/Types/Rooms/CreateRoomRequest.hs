@@ -26,4 +26,4 @@ data CreateRoomRequest = CreateRoomRequest
   } deriving (Generic)
 
 instance ToJSON CreateRoomRequest where
-  toJSON = genericHipChatToJSON 3
+  toJSON = snakeToJSON 3

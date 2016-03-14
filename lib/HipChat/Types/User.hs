@@ -18,4 +18,4 @@ data User = User
   } deriving (Generic, Show)
 
 instance FromJSON User where
-  parseJSON = genericHipChatParseJSON 4
+  parseJSON = snakeParseJSON 4

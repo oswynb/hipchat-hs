@@ -18,7 +18,7 @@ data CreateRoomResponseLinks = CreateRoomResponseLinks
   } deriving (Generic, Show)
 
 instance FromJSON CreateRoomResponse where
-  parseJSON = genericHipChatParseJSON 3
+  parseJSON = snakeParseJSON 3
 
 instance FromJSON CreateRoomResponseLinks where
-  parseJSON = genericHipChatParseJSON 4
+  parseJSON = snakeParseJSON 4

@@ -21,7 +21,7 @@ data UserItem = UserItem
 
 
 instance FromJSON UserItem where
-  parseJSON = genericHipChatParseJSON 2
+  parseJSON = snakeParseJSON 2
 
 data GetAllMembersResponse = GetAllMembersResponse
   { gamrItems      :: [UserItem]

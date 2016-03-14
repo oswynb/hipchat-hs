@@ -45,4 +45,4 @@ createWebhookRequest :: Text -> RoomEvent -> CreateWebhookRequest
 createWebhookRequest url event = CreateWebhookRequest Nothing url Nothing Nothing Nothing event
 
 instance ToJSON CreateWebhookRequest where
-  toJSON = genericHipChatToJSON 3
+  toJSON = snakeToJSON 3

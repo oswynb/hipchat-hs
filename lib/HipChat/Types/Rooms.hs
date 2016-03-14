@@ -10,17 +10,17 @@ module HipChat.Types.Rooms
   ( CreateRoomRequest(..)
   , CreateRoomResponse(..)
   , CreateRoomResponseLinks(..)
-  , Message(..)
-  , RoomEvent(..)
   , CreateWebhookRequest(..)
-  , createWebhookRequest
   , CreateWebhookResponse(..)
   , CreateWebhookResponseLinks(..)
-  , SendMessageResponse(..)
-  , RoomStatistics(..)
-  , WebhookKey(..)
   , GetAllMembersResponse(..)
+  , Message(..)
+  , RoomEvent(..)
+  , RoomStatistics(..)
+  , SendMessageResponse(..)
   , UserItem(..)
+  , WebhookKey(..)
+  , createWebhookRequest
   ) where
 
 import           Data.Aeson

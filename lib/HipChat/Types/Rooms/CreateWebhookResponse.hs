@@ -18,7 +18,7 @@ data CreateWebhookResponseLinks = CreateWebhookResponseLinks
   } deriving (Generic, Show)
 
 instance FromJSON CreateWebhookResponse where
-  parseJSON = genericHipChatParseJSON 3
+  parseJSON = snakeParseJSON 3
 
 instance FromJSON CreateWebhookResponseLinks where
-  parseJSON = genericHipChatParseJSON 4
+  parseJSON = snakeParseJSON 4

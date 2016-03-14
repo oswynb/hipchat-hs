@@ -9,17 +9,10 @@ module HipChat.Client where
 import           HipChat.Types.API
 
 import           Control.Monad.Trans.Either
-import           Data.Aeson
-import           Data.Monoid
 import           Data.Proxy
 import           Data.Text                   (Text)
-import qualified Data.Text                   as T
-import           Data.Time.Clock
-import           Data.Time.Format
-import           GHC.Generics
 import           Servant.API
 import           Servant.Client
-import           System.IO
 
 import           HipChat.Types.Common
 import           HipChat.Types.Rooms

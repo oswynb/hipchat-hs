@@ -7,39 +7,52 @@
 {-# LANGUAGE TypeOperators              #-}
 
 module HipChat.Types.Common
-  ( genericHipChatToJSON
-  , genericHipChatParseJSON
-  , WebhookAuth(..)
-  , Token(..)
-  , TokenAuth
-  , IdOrName(..)
+  ( IdOrName(..)
   , Link(..)
   , PaginatedLink(..)
+  , Token(..)
+  , TokenAuth
+  , WebhookAuth(..)
+  , camelParseJSON
+  , camelToJSON
+  , snakeParseJSON
+  , snakeToJSON
   ) where
 
 import           Data.Aeson
 import           Data.Aeson.Types
+import           Data.Char
 import           Data.Monoid
 import           Data.String
 import           Data.Text        (Text)
 import           GHC.Generics
 import           Servant.API
 
-genericHipChatToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
-genericHipChatToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processField len, omitNothingFields = True}
+snakeToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
+snakeToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processSnake len, omitNothingFields = True}
 
-genericHipChatParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
-genericHipChatParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processField len}
+snakeParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
+snakeParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processSnake len}
 
-processField :: Int -> String -> String
-processField len x = camelTo '_' $  drop len x
+camelToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
+camelToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processCamel len, omitNothingFields = True}
+
+camelParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
+camelParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processCamel len}
+
+processCamel :: Int -> String -> String
+processCamel len xs = let (x:xs') = drop len xs
+                      in toLower x : xs'
+
+processSnake :: Int -> String -> String
+processSnake len xs = camelTo '_' $  drop len xs
 
 data Link = Link
   { linkSelf :: Text
   } deriving (Generic, Show)
 
 instance FromJSON Link where
-  parseJSON = genericHipChatParseJSON 4
+  parseJSON = snakeParseJSON 4
 
 data PaginatedLink = PaginatedLink
   { plSelf :: Text
@@ -48,7 +61,7 @@ data PaginatedLink = PaginatedLink
   } deriving (Generic, Show)
 
 instance FromJSON PaginatedLink where
-  parseJSON = genericHipChatParseJSON 2
+  parseJSON = snakeParseJSON 2
 
 data WebhookAuth = JWT
                  | None
