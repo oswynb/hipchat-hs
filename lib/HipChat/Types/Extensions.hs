@@ -73,7 +73,7 @@ data CapabilitiesLinks = CapabilitiesLinks
   } deriving (Generic, Show)
 
 capabilitiesLinks :: Text -> CapabilitiesLinks
-capabilitiesLinks self = CapabilitiesLinks Nothing self
+capabilitiesLinks = CapabilitiesLinks Nothing
 
 instance ToJSON CapabilitiesLinks where
   toJSON = genericToJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 2 x in toLower y:ys, omitNothingFields = True}

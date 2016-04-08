@@ -70,3 +70,11 @@ type GetAllMembers =
   :> QueryParam "start-index" Int
   :> QueryParam "max-results" Int
   :> Get '[JSON] GetAllMembersResponse
+
+type GetAllRooms =
+    "v2" :> "room"
+  :> QueryParam "start-index" Int
+  :> QueryParam "max-results" Int
+  :> QueryParam "include-private" Bool
+  :> QueryParam "include-archived" Bool
+  :> Get '[JSON] GetAllRoomsResponse

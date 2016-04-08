@@ -42,7 +42,7 @@ instance ToJSON RoomEvent where
   toJSON = genericToJSON defaultOptions{constructorTagModifier=camelTo '_'}
 
 createWebhookRequest :: Text -> RoomEvent -> CreateWebhookRequest
-createWebhookRequest url event = CreateWebhookRequest Nothing url Nothing Nothing Nothing event
+createWebhookRequest url = CreateWebhookRequest Nothing url Nothing Nothing Nothing
 
 instance ToJSON CreateWebhookRequest where
   toJSON = snakeToJSON 3

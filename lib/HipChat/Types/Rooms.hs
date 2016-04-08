@@ -14,6 +14,7 @@ module HipChat.Types.Rooms
   , CreateWebhookResponse(..)
   , CreateWebhookResponseLinks(..)
   , GetAllMembersResponse(..)
+  , GetAllRoomsResponse(..)
   , Message(..)
   , RoomEvent(..)
   , RoomStatistics(..)
@@ -28,11 +29,13 @@ import           Data.String
 import           Data.Text                                 (Text)
 import           GHC.Generics
 
+import           HipChat.Types.Common
 import           HipChat.Types.Rooms.CreateRoomRequest
 import           HipChat.Types.Rooms.CreateRoomResponse
 import           HipChat.Types.Rooms.CreateWebhookRequest
 import           HipChat.Types.Rooms.CreateWebhookResponse
 import           HipChat.Types.Rooms.GetAllMembersResponse
+import           HipChat.Types.Rooms.GetAllRoomsResponse
 
 
 newtype Message = Message {
@@ -41,10 +44,12 @@ newtype Message = Message {
 instance ToJSON Message
 
 data RoomStatistics = RoomStatistics
-  { messages_sent :: Int
-  , last_active   :: String
+  { roomStatisticsMessagesSent :: Int
+  , roomStatisticsLastActive   :: String
   } deriving (Show, Generic)
-instance FromJSON RoomStatistics
+
+instance FromJSON RoomStatistics where
+  parseJSON = snakeParseJSON (length ("roomStatistics" :: String))
 
 data SendMessageResponse = SendMessageResponse
   { timestamp :: Text

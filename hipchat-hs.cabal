@@ -22,15 +22,17 @@ library
                        HipChat.Types.Extensions
                        HipChat.Types.I18n
                        HipChat.Types.Rooms
+                       HipChat.Types.TokenRequest
+                       HipChat.Types.TokenResponse
+                       HipChat.Types.User
+  other-modules:       
+                       -- Rooms
                        HipChat.Types.Rooms.CreateRoomRequest
                        HipChat.Types.Rooms.CreateRoomResponse
                        HipChat.Types.Rooms.CreateWebhookRequest
                        HipChat.Types.Rooms.CreateWebhookResponse
                        HipChat.Types.Rooms.GetAllMembersResponse
-                       HipChat.Types.TokenRequest
-                       HipChat.Types.TokenResponse
-                       HipChat.Types.User
-  -- other-modules:       
+                       HipChat.Types.Rooms.GetAllRoomsResponse
   -- other-extensions:    
   build-depends:       base >= 4.8 && < 4.9
                      , aeson
@@ -45,5 +47,5 @@ library
                      , text
                      , time
   hs-source-dirs:      lib
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall
+  ghc-options:         -rtsopts -with-rtsopts=-N -Wall
   default-language:    Haskell2010

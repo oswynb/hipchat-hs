@@ -7,17 +7,20 @@
 module HipChat.Types.TokenResponse where
 
 import           Data.Aeson
-import           Data.Text    (Text)
+import           Data.Text            (Text)
 import           GHC.Generics
 
+import           HipChat.Types.Common
+
 data TokenResponse = TokenResponse
-  { access_token  :: Text
-  , expires_in    :: Int
-  , group_name    :: Text
-  , token_type    :: Text
-  , scope         :: Text
-  , group_id      :: Int
-  , refresh_token :: Int
+  { accessToken  :: Text
+  , expiresIn    :: Int
+  , groupName    :: Text
+  , tokenType    :: Text
+  , scope        :: Text
+  , groupId      :: Int
+  , refreshToken :: Int
   } deriving (Generic, Show)
 
-instance FromJSON TokenResponse
+instance FromJSON TokenResponse where
+  parseJSON = snakeParseJSON 0
