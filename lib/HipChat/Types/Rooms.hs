@@ -25,6 +25,7 @@ module HipChat.Types.Rooms
   ) where
 
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.String
 import           Data.Text                                 (Text)
 import           GHC.Generics
@@ -49,7 +50,7 @@ data RoomStatistics = RoomStatistics
   } deriving (Show, Generic)
 
 instance FromJSON RoomStatistics where
-  parseJSON = snakeParseJSON (length ("roomStatistics" :: String))
+  parseJSON = genericParseJSON $ aesonDrop 14 snakeCase
 
 data SendMessageResponse = SendMessageResponse
   { timestamp :: Text

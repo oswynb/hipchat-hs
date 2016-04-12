@@ -3,10 +3,9 @@
 module HipChat.Types.Rooms.CreateWebhookResponse where
 
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.Text            (Text)
 import           GHC.Generics
-
-import           HipChat.Types.Common
 
 data CreateWebhookResponse = CreateWebhookResponse
   { cwrId    :: Either String Int
@@ -18,7 +17,7 @@ data CreateWebhookResponseLinks = CreateWebhookResponseLinks
   } deriving (Generic, Show)
 
 instance FromJSON CreateWebhookResponse where
-  parseJSON = snakeParseJSON 3
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
 instance FromJSON CreateWebhookResponseLinks where
-  parseJSON = snakeParseJSON 4
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase

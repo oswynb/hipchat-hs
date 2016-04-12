@@ -7,10 +7,9 @@
 module HipChat.Types.TokenResponse where
 
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.Text            (Text)
 import           GHC.Generics
-
-import           HipChat.Types.Common
 
 data TokenResponse = TokenResponse
   { accessToken  :: Text
@@ -23,4 +22,4 @@ data TokenResponse = TokenResponse
   } deriving (Generic, Show)
 
 instance FromJSON TokenResponse where
-  parseJSON = snakeParseJSON 0
+  parseJSON = genericParseJSON $ aesonDrop 0 snakeCase

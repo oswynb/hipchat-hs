@@ -4,10 +4,9 @@
 module HipChat.Types.Rooms.CreateRoomRequest where
 
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.Text            (Text)
 import           GHC.Generics
-
-import           HipChat.Types.Common
 
 data RoomPrivacy = Public
                  | Private
@@ -26,4 +25,4 @@ data CreateRoomRequest = CreateRoomRequest
   } deriving (Generic)
 
 instance ToJSON CreateRoomRequest where
-  toJSON = snakeToJSON 3
+  toJSON = genericToJSON $ aesonPrefix snakeCase

@@ -19,12 +19,18 @@ library
   exposed-modules:     HipChat.Client
                        HipChat.Types.API
                        HipChat.Types.Common
+                       HipChat.Types.Dialog
                        HipChat.Types.Extensions
-                       HipChat.Types.I18n
+                       HipChat.Types.Glance
+                       HipChat.Types.Icon
+                       HipChat.Types.Key
+                       HipChat.Types.Name
                        HipChat.Types.Rooms
                        HipChat.Types.TokenRequest
                        HipChat.Types.TokenResponse
                        HipChat.Types.User
+                       HipChat.Types.WebPanel
+
   other-modules:       
                        -- Rooms
                        HipChat.Types.Rooms.CreateRoomRequest
@@ -36,10 +42,12 @@ library
   -- other-extensions:    
   build-depends:       base >= 4.8 && < 4.9
                      , aeson >= 0.11
+                     , aeson-casing
                      , async
                      , bytestring
                      , either
                      , lens
+                     , network-uri >= 2.6
                      , servant
                      , servant-client
                      , split

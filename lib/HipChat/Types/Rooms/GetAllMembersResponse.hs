@@ -4,8 +4,7 @@ module HipChat.Types.Rooms.GetAllMembersResponse where
 
 
 import           Data.Aeson
-import           Data.Aeson.Types
-import           Data.Char
+import           Data.Aeson.Casing
 import           Data.Text            (Text)
 import           GHC.Generics
 
@@ -19,9 +18,8 @@ data UserItem = UserItem
   , uiName        :: Text
   } deriving (Generic, Show)
 
-
 instance FromJSON UserItem where
-  parseJSON = snakeParseJSON 2
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
 data GetAllMembersResponse = GetAllMembersResponse
   { gamrItems      :: [UserItem]
@@ -31,4 +29,4 @@ data GetAllMembersResponse = GetAllMembersResponse
   } deriving (Generic, Show)
 
 instance FromJSON GetAllMembersResponse where
-  parseJSON = genericParseJSON defaultOptions{fieldLabelModifier = \x -> let (y:ys) = drop 4 x in toLower y:ys}
+  parseJSON = genericParseJSON $ aesonPrefix camelCase

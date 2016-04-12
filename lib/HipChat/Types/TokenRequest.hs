@@ -8,10 +8,9 @@ module HipChat.Types.TokenRequest where
 
 import           Control.Lens
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.Text            (Text)
 import           GHC.Generics
-
-import           HipChat.Types.Common
 
 data GrantType = AuthorizationCode
                | RefreshToken
@@ -45,20 +44,20 @@ instance ToJSON GrantType where
   toJSON = toJSON . (^. re grantType)
 
 data TokenRequest = TokenRequest
-  { tokenRequestUsername     :: Maybe Text
-  , tokenRequestGrantType    :: GrantType
-  , tokenRequestUserId       :: Maybe Text
-  , tokenRequestCode         :: Maybe Text
-  , tokenRequestClientName   :: Maybe Text
-  , tokenRequestRedirectUri  :: Maybe Text
-  , tokenRequestScope        :: Maybe Text
-  , tokenRequestPassword     :: Maybe Text
-  , tokenRequestGroupId      :: Maybe Text
-  , tokenRequestRefreshToken :: Maybe Text
+  { trUsername     :: Maybe Text
+  , trGrantType    :: GrantType
+  , trUserId       :: Maybe Text
+  , trCode         :: Maybe Text
+  , trClientName   :: Maybe Text
+  , trRedirectUri  :: Maybe Text
+  , trScope        :: Maybe Text
+  , trPassword     :: Maybe Text
+  , trGroupId      :: Maybe Text
+  , trRefreshToken :: Maybe Text
   } deriving (Generic, Show)
 
 instance ToJSON TokenRequest where
-  toJSON = snakeToJSON (length ("tokenRequest" :: String))
+  toJSON = genericToJSON $ aesonPrefix snakeCase
 
 tokenRequest :: GrantType -> TokenRequest
 tokenRequest gt = TokenRequest Nothing gt Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing

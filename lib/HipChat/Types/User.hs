@@ -4,10 +4,9 @@
 module HipChat.Types.User where
 
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.Text            (Text)
 import           GHC.Generics
-
-import           HipChat.Types.Common
 
 data User = User
   { userXmppJid    :: Text
@@ -18,4 +17,4 @@ data User = User
   } deriving (Generic, Show)
 
 instance FromJSON User where
-  parseJSON = snakeParseJSON 4
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase

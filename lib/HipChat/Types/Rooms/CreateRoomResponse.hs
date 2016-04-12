@@ -3,6 +3,7 @@
 module HipChat.Types.Rooms.CreateRoomResponse where
 
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.Text            (Text)
 import           GHC.Generics
 
@@ -18,7 +19,7 @@ data CreateRoomResponseLinks = CreateRoomResponseLinks
   } deriving (Generic, Show)
 
 instance FromJSON CreateRoomResponse where
-  parseJSON = snakeParseJSON 3
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
 instance FromJSON CreateRoomResponseLinks where
-  parseJSON = snakeParseJSON 4
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase

@@ -10,58 +10,53 @@ module HipChat.Types.Common
   ( IdOrName(..)
   , Link(..)
   , PaginatedLink(..)
+  , RoomEvent(..)
   , Token(..)
   , TokenAuth
   , WebhookAuth(..)
-  , camelParseJSON
-  , camelToJSON
-  , snakeParseJSON
-  , snakeToJSON
   ) where
 
 import           Data.Aeson
+import           Data.Aeson.Casing
 import           Data.Aeson.Types
-import           Data.Char
 import           Data.Monoid
 import           Data.String
 import           Data.Text        (Text)
 import           GHC.Generics
 import           Servant.API
 
-snakeToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
-snakeToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processSnake len, omitNothingFields = True}
+data RoomEvent = RoomArchived
+               | RoomCreated
+               | RoomDeleted
+               | RoomEnter
+               | RoomExit
+               | RoomFileUpload
+               | RoomMessage
+               | RoomNotification
+               | RoomTopicChange
+               | RoomUnarchived
+  deriving (Eq, Generic, Show)
 
-snakeParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
-snakeParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processSnake len}
+instance ToJSON RoomEvent where
+  toJSON = genericToJSON defaultOptions{constructorTagModifier=camelTo2 '_'}
 
-camelToJSON :: (Generic a, GToJSON (Rep a)) => Int -> a -> Value
-camelToJSON len = genericToJSON defaultOptions{fieldLabelModifier=processCamel len, omitNothingFields = True}
-
-camelParseJSON :: (Generic a, GFromJSON (Rep a)) => Int -> Value -> Parser a
-camelParseJSON len = genericParseJSON defaultOptions{fieldLabelModifier=processCamel len}
-
-processCamel :: Int -> String -> String
-processCamel len xs = let (x:xs') = drop len xs
-                      in toLower x : xs'
-
-processSnake :: Int -> String -> String
-processSnake len xs = camelTo '_' $  drop len xs
-
+instance FromJSON RoomEvent where
+  parseJSON = genericParseJSON defaultOptions{constructorTagModifier=camelTo2 '_'}
 data Link = Link
   { linkSelf :: Text
   } deriving (Generic, Show)
 
 instance FromJSON Link where
-  parseJSON = snakeParseJSON 4
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
 data PaginatedLink = PaginatedLink
-  { plSelf :: Text
-  , plPrev :: Maybe Text
-  , plNext :: Maybe Text
+  { paginatedSelf :: Text
+  , paginatedPrev :: Maybe Text
+  , paginatedNext :: Maybe Text
   } deriving (Generic, Show)
 
 instance FromJSON PaginatedLink where
-  parseJSON = snakeParseJSON 2
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
 data WebhookAuth = JWT
                  | None
