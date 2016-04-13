@@ -6,6 +6,7 @@ module HipChat.Types.Extensions where
 
 import           Data.Aeson
 import           Data.Aeson.Casing
+import           Data.Aeson.Types
 import           Data.Maybe
 import           Data.Monoid
 import           Data.String
@@ -118,7 +119,7 @@ defaultAPIConsumer :: APIConsumer
 defaultAPIConsumer = APIConsumer Nothing Nothing [SendNotification]
 
 instance ToJSON APIConsumer where
-  toJSON = genericToJSON $ aesonPrefix camelCase
+  toJSON = genericToJSON (aesonPrefix camelCase){omitNothingFields = True}
 
 instance FromJSON APIConsumer where
   parseJSON = genericParseJSON $ aesonPrefix camelCase
@@ -135,7 +136,7 @@ defaultCapabilitiesLinks :: Text -> CapabilitiesLinks
 defaultCapabilitiesLinks = CapabilitiesLinks Nothing
 
 instance ToJSON CapabilitiesLinks where
-  toJSON = genericToJSON $ aesonPrefix camelCase
+  toJSON = genericToJSON (aesonPrefix camelCase){omitNothingFields = True}
 
 instance FromJSON CapabilitiesLinks where
   parseJSON = genericParseJSON $ aesonPrefix camelCase
@@ -171,7 +172,7 @@ capabilitiesDescriptor :: Text -> Text -> CapabilitiesLinks -> Text -> Capabilit
 capabilitiesDescriptor desc key links name = CapabilitiesDescriptor Nothing Nothing desc key links name Nothing
 
 instance ToJSON CapabilitiesDescriptor where
-  toJSON = genericToJSON $ aesonDrop 22 camelCase
+  toJSON = genericToJSON (aesonDrop 22 camelCase){omitNothingFields = True}
 
 instance FromJSON CapabilitiesDescriptor where
   parseJSON = genericParseJSON $ aesonDrop 22 camelCase

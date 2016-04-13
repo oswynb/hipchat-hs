@@ -23,6 +23,7 @@ library
                        HipChat.Types.Extensions
                        HipChat.Types.Glance
                        HipChat.Types.Icon
+                       HipChat.Types.InstallInfo
                        HipChat.Types.Key
                        HipChat.Types.Name
                        HipChat.Types.Rooms

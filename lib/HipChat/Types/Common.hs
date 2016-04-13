@@ -70,14 +70,14 @@ instance ToJSON WebhookAuth where
 newtype Token = Token Text
   deriving (Show, IsString)
 
-instance ToText Token where
-  toText (Token tok) = "Bearer " <> tok
+instance ToHttpApiData Token where
+  toQueryParam (Token tok) = "Bearer " <> tok
 
 type family TokenAuth a where
   TokenAuth (x :<|> y) = TokenAuth x :<|> TokenAuth y
   TokenAuth x = Header "Authorization" Token :> x
 
 newtype IdOrName = IdOrName Text
-  deriving (FromText, Generic, Show, ToText, IsString)
+  deriving (Generic, Show, IsString, ToHttpApiData)
 
 instance FromJSON IdOrName

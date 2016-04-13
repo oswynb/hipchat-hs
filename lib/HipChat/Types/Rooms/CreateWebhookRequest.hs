@@ -22,7 +22,7 @@ data CreateWebhookRequest = CreateWebhookRequest
   } deriving (Generic, Show)
 
 newtype WebhookKey = WebhookKey Text
-  deriving (FromText, Generic, ToText, IsString, Show)
+  deriving (Generic, IsString, Show, ToHttpApiData)
 
 instance ToJSON WebhookKey where
   toJSON = genericToJSON $ aesonDrop 20 camelCase
