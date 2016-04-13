@@ -86,7 +86,7 @@ instance ToJSON Capabilities where
     , ("webhook" .=) <$> excludeEmptyList hs
     , ("configurable" .=) <$> cfg
     , ("dialog" .=) <$> excludeEmptyList dlg
-    , ("webpanel" .=) <$> excludeEmptyList wp
+    , ("webPanel" .=) <$> excludeEmptyList wp
     , ("glance" .=) <$> excludeEmptyList gl
     ]
 
