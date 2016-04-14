@@ -21,6 +21,6 @@ import           HipChat.Types.User
 hipChatAPI :: Proxy HipChatAPI
 hipChatAPI = Proxy
 
-sendMessage :<|> createRoom :<|> getRoomStatistics :<|> generateToken :<|> viewUser :<|> createWebhook :<|> getAllMembers = client hipChatAPI
+sendMessage :<|> createRoom :<|> getRoomStatistics :<|> generateToken :<|> viewUser :<|> createWebhook :<|> getAllMembers :<|> roomAddonUIUpdate= client hipChatAPI
   where
     host = BaseUrl Https "api.hipchat.com" 443

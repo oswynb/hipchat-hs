@@ -47,6 +47,14 @@ data GlanceData = GlanceData
 instance ToJSON GlanceData where
   toJSON = genericToJSON $ aesonDrop 10 camelCase
 
+data GlanceUpdate = GlanceUpdate
+  { glanceUpdateContent :: GlanceData
+  , glanceUpdateKey     :: GlanceTarget
+  } deriving (Eq, Generic, Show)
+
+instance ToJSON GlanceUpdate where
+  toJSON = genericToJSON $ aesonDrop 11 camelCase
+
 newtype GlanceDataLabel = GlanceDataLabel Text
   deriving (Eq, Show)
 

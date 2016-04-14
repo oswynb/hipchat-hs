@@ -40,6 +40,8 @@ library
                        HipChat.Types.Rooms.CreateWebhookResponse
                        HipChat.Types.Rooms.GetAllMembersResponse
                        HipChat.Types.Rooms.GetAllRoomsResponse
+                       -- Other
+                       HipChat.Types.RoomAddonUIUpdateRequest
   -- other-extensions:    
   build-depends:       base >= 4.8 && < 4.9
                      , aeson >= 0.11

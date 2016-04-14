@@ -9,6 +9,7 @@ import           Servant.API
 
 import           HipChat.Types.Common
 import           HipChat.Types.Rooms
+import           HipChat.Types.RoomAddonUIUpdateRequest
 import           HipChat.Types.TokenRequest
 import           HipChat.Types.TokenResponse
 import           HipChat.Types.User
@@ -20,7 +21,8 @@ type HipChatAPI = TokenAuth(
   :<|> GenerateToken
   :<|> ViewUser
   :<|> CreateWebhook
-  :<|> GetAllMembers)
+  :<|> GetAllMembers
+  :<|> RoomAddonUIUpdate)
 
 type GenerateToken =
     "v2" :> "oauth" :> "token"
@@ -78,3 +80,12 @@ type GetAllRooms =
   :> QueryParam "include-private" Bool
   :> QueryParam "include-archived" Bool
   :> Get '[JSON] GetAllRoomsResponse
+
+--------------------------------------------------------------------------------
+
+-- Addons
+
+type RoomAddonUIUpdate =
+    "v2" :> "addon" :> "ui" :> "room"
+  :> Capture "room_id" Int
+  :> GetNoContent '[JSON] NoContent
