@@ -32,6 +32,14 @@ data APIScope
 instance Show APIScope where
   show = T.unpack . (^. re apiScope)
 
+instance ToJSON APIScope where
+  toJSON = String . (^. re apiScope)
+
+instance FromJSON APIScope where
+  parseJSON = withText "Scope" $ \t -> case t ^? apiScope of
+    Nothing -> fail (T.unpack t)
+    Just s  -> return s
+
 apiScope :: Prism' Text APIScope
 apiScope = prism' enc dec
   where
@@ -74,11 +82,14 @@ instance FromJSON ScopeList where
 data APIConsumer = APIConsumer
   { apiAvatar   :: Maybe Text
   , apiFromName :: Maybe Text
-  , apiScopes   :: ScopeList
+  , apiScopes   :: [APIScope]
   } deriving (Generic, Show, Eq)
 
 defaultAPIConsumer :: APIConsumer
-defaultAPIConsumer = APIConsumer Nothing Nothing (ScopeList [SendNotification])
+defaultAPIConsumer = APIConsumer Nothing Nothing [SendNotification]
+
+adminConsumer :: APIConsumer
+adminConsumer = APIConsumer Nothing Nothing [AdminRoom]
 
 instance ToJSON APIConsumer where
   toJSON = genericToJSON (aesonPrefix camelCase){omitNothingFields = True}
@@ -86,15 +97,13 @@ instance ToJSON APIConsumer where
 instance FromJSON APIConsumer where
   parseJSON = genericParseJSON $ aesonPrefix camelCase
 
-clientCredentialsRequest :: Text -> Text -> TokenRequest
-clientCredentialsRequest user pass =
-  TokenRequest (Just user) ClientCredentials Nothing Nothing Nothing Nothing (Just $ ScopeList [AdminRoom]) (Just pass) Nothing Nothing
-
+clientCredentialsRequest :: Maybe Text -> TokenRequest
+clientCredentialsRequest user =
+  TokenRequest user ClientCredentials Nothing Nothing Nothing Nothing (Just $ ScopeList [SendNotification]) Nothing Nothing Nothing
 
 data AccessToken = AccessToken
   { accessTokenAccessToken :: Text
   , accessTokenExpires     :: UTCTime
-  , accessTokenRefresh     :: Text
   } deriving (Generic, Show, Eq)
 
 data GrantType = AuthorizationCode

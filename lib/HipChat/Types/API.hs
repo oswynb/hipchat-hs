@@ -17,11 +17,11 @@ type HipChatAPI = TokenAuth(
        SendMessage
   :<|> CreateRoom
   :<|> GetRoomStatistics
-  :<|> GenerateToken
   :<|> ViewUser
   :<|> CreateWebhook
   :<|> GetAllMembers
-  :<|> RoomAddonUIUpdate)
+  :<|> RoomAddonUIUpdate
+  :<|> GenerateToken)
 
 type GenerateToken =
     "v2" :> "oauth" :> "token"

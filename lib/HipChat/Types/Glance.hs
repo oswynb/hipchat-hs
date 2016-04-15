@@ -52,7 +52,7 @@ data GlanceUpdate = GlanceUpdate
   } deriving (Eq, Generic, Show)
 
 instance ToJSON GlanceUpdate where
-  toJSON = genericToJSON $ aesonDrop 11 camelCase
+  toJSON = genericToJSON $ aesonDrop 12 camelCase
 
 newtype GlanceDataLabel = GlanceDataLabel Text
   deriving (Eq, Show)
