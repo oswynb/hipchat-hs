@@ -18,21 +18,17 @@ source-repository HEAD
 library
   exposed-modules:     HipChat.Client
                        HipChat.Types.API
+                       HipChat.Types.Auth
                        HipChat.Types.Common
                        HipChat.Types.Dialog
                        HipChat.Types.Extensions
                        HipChat.Types.Glance
                        HipChat.Types.Icon
-                       HipChat.Types.InstallInfo
                        HipChat.Types.Key
                        HipChat.Types.Name
                        HipChat.Types.Rooms
-                       HipChat.Types.TokenRequest
-                       HipChat.Types.TokenResponse
                        HipChat.Types.User
                        HipChat.Types.WebPanel
-
-  other-modules:       
                        -- Rooms
                        HipChat.Types.Rooms.CreateRoomRequest
                        HipChat.Types.Rooms.CreateRoomResponse

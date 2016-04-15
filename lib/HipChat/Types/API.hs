@@ -7,11 +7,11 @@ import           Data.Text                   (Text)
 
 import           Servant.API
 
+import           HipChat.Types.Auth
 import           HipChat.Types.Common
+import           HipChat.Types.Glance
 import           HipChat.Types.Rooms
 import           HipChat.Types.RoomAddonUIUpdateRequest
-import           HipChat.Types.TokenRequest
-import           HipChat.Types.TokenResponse
 import           HipChat.Types.User
 
 type HipChatAPI = TokenAuth(
@@ -27,6 +27,7 @@ type HipChatAPI = TokenAuth(
 type GenerateToken =
     "v2" :> "oauth" :> "token"
   :> ReqBody '[JSON] TokenRequest
+  :> BasicAuth "oauth" Int
   :> Post '[JSON] TokenResponse
 
 type ViewUser =
@@ -88,4 +89,5 @@ type GetAllRooms =
 type RoomAddonUIUpdate =
     "v2" :> "addon" :> "ui" :> "room"
   :> Capture "room_id" Int
-  :> GetNoContent '[JSON] NoContent
+  :> ReqBody '[JSON] GlanceUpdate
+  :> PostNoContent '[JSON] NoContent

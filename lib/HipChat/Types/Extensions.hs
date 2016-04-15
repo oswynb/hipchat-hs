@@ -4,6 +4,7 @@
 
 module HipChat.Types.Extensions where
 
+import Data.Ord
 import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
@@ -15,6 +16,7 @@ import qualified Data.Text            as T
 import           Data.Time
 import           GHC.Generics
 
+import           HipChat.Types.Auth
 import           HipChat.Types.Common
 import           HipChat.Types.Dialog
 import           HipChat.Types.Glance
@@ -105,24 +107,7 @@ instance FromJSON Capabilities where
     <*> o .:? "webpanel" .!= []
     <*> o .:? "glance" .!= []
 
---------------------------------------------------------------------------------
 
--- HipChat API Consumer
-
-data APIConsumer = APIConsumer
-  { apiAvatar   :: Maybe Text
-  , apiFromName :: Maybe Text
-  , apiScopes   :: [APIScope]
-  } deriving (Generic, Show, Eq)
-
-defaultAPIConsumer :: APIConsumer
-defaultAPIConsumer = APIConsumer Nothing Nothing [SendNotification]
-
-instance ToJSON APIConsumer where
-  toJSON = genericToJSON (aesonPrefix camelCase){omitNothingFields = True}
-
-instance FromJSON APIConsumer where
-  parseJSON = genericParseJSON $ aesonPrefix camelCase
 
 --------------------------------------------------------------------------------
 
@@ -196,45 +181,6 @@ webhook url = Webhook url Nothing
 
 --------------------------------------------------------------------------------
 
-data APIScope
-  = AdminGroup
-  | AdminRoom
-  | ManageRooms
-  | SendMessage
-  | SendNotification
-  | ViewGroup
-  | ViewMessages
-  deriving Eq
-
-instance Show APIScope where
-  show = apiScopeStr
-
-instance ToJSON APIScope where
-  toJSON = String . apiScopeStr
-
-apiScopeStr :: IsString a => APIScope -> a
-apiScopeStr = \case
-  AdminGroup -> "admin_group"
-  AdminRoom -> "admin_room"
-  ManageRooms -> "manage_rooms"
-  SendMessage -> "send_message"
-  SendNotification -> "send_notification"
-  ViewGroup -> "view_group"
-  ViewMessages -> "view_messages"
-
-instance FromJSON APIScope where
-  parseJSON = withText "string" $ \case
-    "admin_group" -> return AdminGroup
-    "admin_room" -> return AdminRoom
-    "manage_rooms" -> return ManageRooms
-    "send_message" -> return SendMessage
-    "send_notification" -> return SendNotification
-    "view_group" -> return ViewGroup
-    "view_messages" -> return ViewMessages
-    s -> fail $ "unexpected API scope " <> T.unpack s
-
---------------------------------------------------------------------------------
-
 data OAuth2Provider = OAuth2Provider
   { oauth2ProviderAuthorizationUrl :: Text
   , oauth2ProviderTokenUrl         :: Text
@@ -266,14 +212,10 @@ data Registration = Registration
   , registrationRoomId          :: Maybe Int
   , registrationGroupId         :: Int
   , registrationOauthSecret     :: Text
-  } deriving (Generic, Show, Eq)
+  } deriving (Generic, Show, Eq, Ord)
 
---------------------------------------------------------------------------------
-
-data AccessToken = AccessToken
-  { accessTokenAccessToken :: Text
-  , accessTokenExpires     :: UTCTime
-  } deriving (Generic, Show, Eq)
+instance FromJSON Registration where
+  parseJSON = genericParseJSON $ aesonPrefix camelCase
 
 --------------------------------------------------------------------------------
 
