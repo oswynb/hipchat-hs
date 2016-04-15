@@ -21,7 +21,7 @@ import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Monoid
 import           Data.String
-import           Data.Text        (Text)
+import           Data.Text         (Text)
 import           GHC.Generics
 import           Servant.API
 

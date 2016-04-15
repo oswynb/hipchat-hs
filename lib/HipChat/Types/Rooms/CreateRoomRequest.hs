@@ -5,7 +5,7 @@ module HipChat.Types.Rooms.CreateRoomRequest where
 
 import           Data.Aeson
 import           Data.Aeson.Casing
-import           Data.Text            (Text)
+import           Data.Text         (Text)
 import           GHC.Generics
 
 data RoomPrivacy = Public

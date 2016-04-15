@@ -5,7 +5,7 @@ module HipChat.Types.User where
 
 import           Data.Aeson
 import           Data.Aeson.Casing
-import           Data.Text            (Text)
+import           Data.Text         (Text)
 import           GHC.Generics
 
 data User = User

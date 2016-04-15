@@ -6,7 +6,7 @@ module HipChat.Types.Icon where
 
 import           Data.Aeson
 import           Data.Aeson.Types
-import Data.Text(Text)
+import           Data.Text        (Text)
 
 newtype CompoundIcon = CompoundIcon
   { unCompoundIcon :: Either Text Icon

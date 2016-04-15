@@ -3,15 +3,14 @@
 
 module HipChat.Types.API where
 
-import           Data.Text                   (Text)
+import           Data.Text                              (Text)
 
 import           Servant.API
 
 import           HipChat.Types.Auth
 import           HipChat.Types.Common
-import           HipChat.Types.Glance
-import           HipChat.Types.Rooms
 import           HipChat.Types.RoomAddonUIUpdateRequest
+import           HipChat.Types.Rooms
 import           HipChat.Types.User
 
 type HipChatAPI = TokenAuth(
@@ -89,5 +88,5 @@ type GetAllRooms =
 type RoomAddonUIUpdate =
     "v2" :> "addon" :> "ui" :> "room"
   :> Capture "room_id" Int
-  :> ReqBody '[JSON] GlanceUpdate
+  :> ReqBody '[JSON] RoomAddonUIUpdateRequest
   :> PostNoContent '[JSON] NoContent

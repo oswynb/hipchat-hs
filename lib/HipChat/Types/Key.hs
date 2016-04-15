@@ -21,7 +21,7 @@ key = prism' enc dec
   where
     enc = unKey
     dec x = let l = T.length x
-            in if (l >= 1 && l <= 40) then
+            in if l >= 1 && l <= 40 then
               Just $ Key x
             else
               Nothing
@@ -36,5 +36,5 @@ instance FromJSON Key where
   parseJSON x = do
     rawKey <- parseJSON x
     case rawKey ^? key of
-      Nothing -> fail $ "Invalid key length, expected [1,40], got: " <> (show $ T.length rawKey)
+      Nothing -> fail $ "Invalid key length, expected [1,40], got: " <> show (T.length rawKey)
       Just k  -> return k

@@ -8,7 +8,6 @@ module HipChat.Types.Glance where
 import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
-import           Data.Char
 import           Data.Text          (Text)
 import           GHC.Generics
 

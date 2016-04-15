@@ -38,7 +38,7 @@ data WebPanel = WebPanel
   } deriving (Eq, Generic, Show)
 
 webPanel :: Key -> Name -> Text -> WebPanel
-webPanel key name url = WebPanel Nothing key HipchatSidebarRight name url Nothing
+webPanel k name url = WebPanel Nothing k HipchatSidebarRight name url Nothing
 
 instance ToJSON WebPanel where
   toJSON = genericToJSON (aesonDrop 8 camelCase){omitNothingFields = True}

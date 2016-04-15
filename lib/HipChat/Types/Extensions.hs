@@ -1,19 +1,15 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE LambdaCase    #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module HipChat.Types.Extensions where
 
-import Data.Ord
 import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Maybe
 import           Data.Monoid
-import           Data.String
-import           Data.Text            (Text)
-import qualified Data.Text            as T
-import           Data.Time
+import           Data.Text              (Text)
 import           GHC.Generics
 
 import           HipChat.Types.Auth

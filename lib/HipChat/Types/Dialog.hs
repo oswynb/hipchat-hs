@@ -1,11 +1,8 @@
-{-# LANGUAGE DeriveDataTypeable     #-}
-{-# LANGUAGE DeriveGeneric          #-}
-{-# LANGUAGE FlexibleInstances      #-}
-{-# LANGUAGE FunctionalDependencies #-}
-{-# LANGUAGE LambdaCase             #-}
-{-# LANGUAGE MultiParamTypeClasses  #-}
-{-# LANGUAGE OverloadedStrings      #-}
-{-# LANGUAGE TemplateHaskell        #-}
+{-# LANGUAGE DeriveGeneric         #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE LambdaCase            #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
 
 module HipChat.Types.Dialog where
 
@@ -43,7 +40,7 @@ instance ToJSON DialogStyle where
 instance FromJSON DialogStyle where
   parseJSON (String "normal") = return Normal
   parseJSON (String "warning") = return Warning
-  parseJSON (String text) = fail ("Unexpected style string: " ++ (show text))
+  parseJSON (String text) = fail ("Unexpected style string: " ++ show text)
   parseJSON x = typeMismatch "Invalid style" x
 
 data DialogOptions = DialogOptions
@@ -76,7 +73,7 @@ instance ToJSON DialogAction where
 instance FromJSON DialogAction where
   parseJSON = genericParseJSON $ aesonPrefix camelCase
 
-data DialogSize = DialogSize 
+data DialogSize = DialogSize
   { dialogsizeHeight :: Text -- Either 'px' or '%'
   , dialogsizeWidth  :: Text -- Either 'px' or '%'
   } deriving (Show, Eq, Generic)

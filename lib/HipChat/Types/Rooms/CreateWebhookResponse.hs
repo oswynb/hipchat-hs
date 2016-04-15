@@ -4,7 +4,7 @@ module HipChat.Types.Rooms.CreateWebhookResponse where
 
 import           Data.Aeson
 import           Data.Aeson.Casing
-import           Data.Text            (Text)
+import           Data.Text         (Text)
 import           GHC.Generics
 
 data CreateWebhookResponse = CreateWebhookResponse

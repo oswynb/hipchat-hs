@@ -4,16 +4,15 @@
 
 module HipChat.Types.Auth where
 
-import Control.Monad
 import           Control.Lens
+import           Control.Monad
 import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Monoid
-import           Data.String
 import           Data.Text         (Text)
+import qualified Data.Text         as T
 import           Data.Time
-import qualified Data.Text            as T
 import           GHC.Generics
 
 --------------------------------------------------------------------------------
@@ -34,9 +33,9 @@ instance Show APIScope where
   show = T.unpack . (^. re apiScope)
 
 apiScope :: Prism' Text APIScope
-apiScope = prism' display parse
+apiScope = prism' enc dec
   where
-    display = \case
+    enc = \case
       AdminGroup       -> "admin_group"
       AdminRoom        -> "admin_room"
       ManageRooms      -> "manage_rooms"
@@ -44,7 +43,7 @@ apiScope = prism' display parse
       SendNotification -> "send_notification"
       ViewGroup        -> "view_group"
       ViewMessages     -> "view_messages"
-    parse = \case
+    dec = \case
       "admin_group"       -> return AdminGroup
       "admin_room"        -> return AdminRoom
       "manage_rooms"      -> return ManageRooms
@@ -109,22 +108,23 @@ instance Show GrantType where
   show = show . (^. re grantType)
 
 grantType :: Prism' Text GrantType
-grantType = prism' display parse
+grantType = prism' enc dec
   where
-    display AuthorizationCode = "authorization_code"
-    display RefreshToken      = "refresh_token"
-    display Password          = "password"
-    display ClientCredentials = "client_credentials"
-    display Personal          = "personal"
-    display RoomNotification  = "room_notification"
-
-    parse "authorization_code" = Just AuthorizationCode
-    parse "refresh_token"      = Just RefreshToken
-    parse "password"           = Just Password
-    parse "client_credentials" = Just ClientCredentials
-    parse "personal"           = Just Personal
-    parse "room_notification"  = Just RoomNotification
-    parse _                    = Nothing
+    enc = \case
+      AuthorizationCode -> "authorization_code"
+      RefreshToken      -> "refresh_token"
+      Password          -> "password"
+      ClientCredentials -> "client_credentials"
+      Personal          -> "personal"
+      RoomNotification  -> "room_notification"
+    dec = \case
+      "authorization_code" -> Just AuthorizationCode
+      "refresh_token"      -> Just RefreshToken
+      "password"           -> Just Password
+      "client_credentials" -> Just ClientCredentials
+      "personal"           -> Just Personal
+      "room_notification"  -> Just RoomNotification
+      _                    -> Nothing
 
 instance ToJSON GrantType where
   toJSON = toJSON . (^. re grantType)
@@ -149,14 +149,14 @@ tokenRequest :: GrantType -> TokenRequest
 tokenRequest gt = TokenRequest Nothing gt Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing
 
 data TokenResponse = TokenResponse
-  { accessToken  :: Text
-  , expiresIn    :: Int
-  , groupName    :: Text
-  , tokenType    :: Text
-  , scope        :: ScopeList
-  , groupId      :: Int
-  , refreshToken :: Int
+  { trsAccessToken  :: Text
+  , trsExpiresIn    :: Int
+  , trsGroupName    :: Text
+  , trsTokenType    :: Text
+  , trsScope        :: ScopeList
+  , trsGroupId      :: Int
+  , trsRefreshToken :: Maybe Text
   } deriving (Generic, Show)
 
 instance FromJSON TokenResponse where
-  parseJSON = genericParseJSON $ aesonDrop 0 snakeCase
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase

@@ -45,10 +45,11 @@ library
                      , async
                      , bytestring
                      , either
+                     , http-client
                      , lens
                      , network-uri >= 2.6
-                     , servant
-                     , servant-client
+                     , servant >= 0.6
+                     , servant-client >= 0.6
                      , split
                      , string-conversions
                      , text
