@@ -1,5 +1,5 @@
 name:                hipchat-hs
-version:             0.0.2
+version:             0.0.3
 synopsis:            Hipchat API bindings in Haskell
 description:         Hipchat API bindings in Haskell 
 license:             BSD3
