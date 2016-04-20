@@ -22,6 +22,7 @@ library
                        HipChat.Types.Common
                        HipChat.Types.Dialog
                        HipChat.Types.Extensions
+                       HipChat.Types.ExternalPage
                        HipChat.Types.Glance
                        HipChat.Types.Icon
                        HipChat.Types.Key

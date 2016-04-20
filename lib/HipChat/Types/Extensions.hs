@@ -15,6 +15,7 @@ import           GHC.Generics
 import           HipChat.Types.Auth
 import           HipChat.Types.Common
 import           HipChat.Types.Dialog
+import           HipChat.Types.ExternalPage
 import           HipChat.Types.Glance
 import           HipChat.Types.WebPanel
 
@@ -71,13 +72,14 @@ data Capabilities = Capabilities
   , capabilitiesDialog             :: [Dialog]
   , capabilitiesWebPanel           :: [WebPanel]
   , capabilitiesGlance             :: [Glance]
+  , capabilitiesExternalPage       :: [ExternalPage]
   } deriving (Show, Eq)
 
 defaultCapabilities :: Capabilities
-defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing [] [] []
+defaultCapabilities = Capabilities Nothing Nothing Nothing [] Nothing [] [] [] []
 
 instance ToJSON Capabilities where
-  toJSON (Capabilities is con o hs cfg dlg wp gl) = object $ catMaybes
+  toJSON (Capabilities is con o hs cfg dlg wp gl ep) = object $ catMaybes
     [ ("installable" .=) <$> is
     , ("hipchatApiConsumer" .=) <$> con
     , ("oauth2Provider" .=) <$> o
@@ -86,6 +88,7 @@ instance ToJSON Capabilities where
     , ("dialog" .=) <$> excludeEmptyList dlg
     , ("webPanel" .=) <$> excludeEmptyList wp
     , ("glance" .=) <$> excludeEmptyList gl
+    , ("externalPage" .=) <$> excludeEmptyList ep
     ]
 
 excludeEmptyList :: [a] -> Maybe [a]
@@ -100,10 +103,9 @@ instance FromJSON Capabilities where
     <*> o .:? "webhooks" .!= []
     <*> o .:? "configurable"
     <*> o .:? "dialog" .!= []
-    <*> o .:? "webpanel" .!= []
+    <*> o .:? "webPanel" .!= []
     <*> o .:? "glance" .!= []
-
-
+    <*> o .:? "externalPage" .!= []
 
 --------------------------------------------------------------------------------
 
