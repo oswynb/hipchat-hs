@@ -10,9 +10,11 @@ import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Monoid
-import           Data.Text         (Text)
-import qualified Data.Text         as T
+import           Data.Text                        (Text)
+import qualified Data.Text                        as T
 import           Data.Time
+import           Database.PostgreSQL.Simple.ToRow
+import           Database.PostgreSQL.Simple.FromRow
 import           GHC.Generics
 
 --------------------------------------------------------------------------------
@@ -105,6 +107,12 @@ data AccessToken = AccessToken
   { accessTokenAccessToken :: Text
   , accessTokenExpires     :: UTCTime
   } deriving (Generic, Show, Eq)
+
+instance FromRow AccessToken where
+  fromRow = AccessToken <$> field <*> field
+
+instance ToRow AccessToken where
+  toRow (AccessToken a b) = toRow (a, b)
 
 data GrantType = AuthorizationCode
                | RefreshToken

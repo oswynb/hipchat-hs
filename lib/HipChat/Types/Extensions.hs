@@ -9,7 +9,9 @@ import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Maybe
 import           Data.Monoid
-import           Data.Text              (Text)
+import           Data.Text                        (Text)
+import           Database.PostgreSQL.Simple.ToRow
+import           Database.PostgreSQL.Simple.FromRow
 import           GHC.Generics
 
 import           HipChat.Types.Auth
@@ -214,6 +216,12 @@ data Registration = Registration
 
 instance FromJSON Registration where
   parseJSON = genericParseJSON $ aesonPrefix camelCase
+
+instance ToRow Registration where
+  toRow (Registration a b c d e) = toRow (a, b, c, d, e)
+
+instance FromRow Registration where
+  fromRow = Registration <$> field <*> field <*> field <*> field <*> field
 
 --------------------------------------------------------------------------------
 

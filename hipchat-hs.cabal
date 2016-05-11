@@ -1,7 +1,7 @@
 name:                hipchat-hs
 version:             0.0.3
 synopsis:            Hipchat API bindings in Haskell
-description:         Hipchat API bindings in Haskell 
+description:         Hipchat API bindings in Haskell
 license:             BSD3
 license-file:        LICENSE
 author:              Oswyn Brent <oztastic703@gmail.com>
@@ -39,7 +39,7 @@ library
                        HipChat.Types.Rooms.GetAllRoomsResponse
                        -- Other
                        HipChat.Types.RoomAddonUIUpdateRequest
-  -- other-extensions:    
+  -- other-extensions:
   build-depends:       base >= 4.8 && < 4.9
                      , aeson >= 0.11
                      , aeson-casing
@@ -49,6 +49,7 @@ library
                      , http-client
                      , lens
                      , network-uri >= 2.6
+                     , postgresql-simple
                      , servant >= 0.6
                      , servant-client >= 0.6
                      , split
