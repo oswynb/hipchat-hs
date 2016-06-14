@@ -57,5 +57,5 @@ library
                      , text
                      , time
   hs-source-dirs:      lib
-  ghc-options:         -rtsopts -with-rtsopts=-N -Wall
+  ghc-options:         -Wall
   default-language:    Haskell2010
