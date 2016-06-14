@@ -40,7 +40,7 @@ library
                        -- Other
                        HipChat.Types.RoomAddonUIUpdateRequest
   -- other-extensions:
-  build-depends:       base >= 4.8 && < 4.9
+  build-depends:       base >= 4.8 && < 5
                      , aeson >= 0.11
                      , aeson-casing
                      , async

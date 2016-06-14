@@ -10,11 +10,11 @@ import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Monoid
-import           Data.Text                        (Text)
-import qualified Data.Text                        as T
+import           Data.Text                          (Text)
+import qualified Data.Text                          as T
 import           Data.Time
-import           Database.PostgreSQL.Simple.ToRow
 import           Database.PostgreSQL.Simple.FromRow
+import           Database.PostgreSQL.Simple.ToRow
 import           GHC.Generics
 
 --------------------------------------------------------------------------------

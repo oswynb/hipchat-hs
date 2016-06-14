@@ -44,7 +44,7 @@ data GlanceData = GlanceData
   } deriving (Eq, Generic, Show)
 
 instance ToJSON GlanceData where
-  toJSON = genericToJSON $ aesonDrop 10 camelCase
+  toJSON = genericToJSON (aesonDrop 10 camelCase){omitNothingFields = True}
 
 data GlanceUpdate = GlanceUpdate
   { glanceUpdateContent :: GlanceData

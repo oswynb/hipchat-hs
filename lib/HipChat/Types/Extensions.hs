@@ -9,9 +9,9 @@ import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Maybe
 import           Data.Monoid
-import           Data.Text                        (Text)
-import           Database.PostgreSQL.Simple.ToRow
+import           Data.Text                          (Text)
 import           Database.PostgreSQL.Simple.FromRow
+import           Database.PostgreSQL.Simple.ToRow
 import           GHC.Generics
 
 import           HipChat.Types.Auth
