@@ -9,6 +9,8 @@ import           Control.Monad
 import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
+import           Data.Bifunctor
+import qualified Data.HashMap.Strict                as H
 import           Data.Monoid
 import           Data.Text                          (Text)
 import qualified Data.Text                          as T
@@ -16,6 +18,7 @@ import           Data.Time
 import           Database.PostgreSQL.Simple.FromRow
 import           Database.PostgreSQL.Simple.ToRow
 import           GHC.Generics
+import           Servant.API
 
 --------------------------------------------------------------------------------
 
@@ -160,7 +163,12 @@ data TokenRequest = TokenRequest
   } deriving (Generic, Show)
 
 instance ToJSON TokenRequest where
-  toJSON = genericToJSON $ aesonPrefix snakeCase
+  toJSON = genericToJSON $ (aesonPrefix snakeCase){omitNothingFields=True}
+
+instance ToFormUrlEncoded TokenRequest where
+  toFormUrlEncoded tr =
+    let (Object obj) = toJSON tr
+    in map (second (\(String t) -> t)) $ H.toList obj
 
 tokenRequest :: GrantType -> TokenRequest
 tokenRequest gt = TokenRequest Nothing gt Nothing Nothing Nothing Nothing Nothing Nothing Nothing Nothing

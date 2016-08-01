@@ -56,6 +56,7 @@ library
                      , string-conversions
                      , text
                      , time
+                     , unordered-containers
   hs-source-dirs:      lib
   ghc-options:         -Wall
   default-language:    Haskell2010

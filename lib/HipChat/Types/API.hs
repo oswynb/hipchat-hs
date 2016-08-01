@@ -25,7 +25,7 @@ type HipChatAPI = TokenAuth(
 
 type GenerateToken =
     "v2" :> "oauth" :> "token"
-  :> ReqBody '[JSON] TokenRequest
+  :> ReqBody '[FormUrlEncoded] TokenRequest
   :> BasicAuth "oauth" Int
   :> Post '[JSON] TokenResponse
 
