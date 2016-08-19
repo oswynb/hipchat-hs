@@ -30,6 +30,7 @@ library
                        HipChat.Types.Rooms
                        HipChat.Types.User
                        HipChat.Types.WebPanel
+                       HipChat.Types.Webhook
                        -- Rooms
                        HipChat.Types.Rooms.CreateRoomRequest
                        HipChat.Types.Rooms.CreateRoomResponse

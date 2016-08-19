@@ -165,19 +165,20 @@ instance FromJSON CapabilitiesDescriptor where
 --------------------------------------------------------------------------------
 
 data Webhook = Webhook
-  { webhookUrl     :: Text
-  , webhookPattern :: Maybe Text
-  , webhookEvent   :: RoomEvent
+  { webhookAuthentication :: Maybe HipchatAuth
+  , webhookUrl            :: Text
+  , webhookPattern        :: Maybe Text
+  , webhookEvent          :: RoomEvent
   } deriving (Generic, Show, Eq)
 
 instance ToJSON Webhook where
-  toJSON = genericToJSON $ aesonPrefix camelCase
+  toJSON = genericToJSON (aesonPrefix camelCase){omitNothingFields = True}
 
 instance FromJSON Webhook where
-  parseJSON = genericParseJSON $ aesonPrefix camelCase
+  parseJSON = genericParseJSON (aesonPrefix camelCase){omitNothingFields = True}
 
 webhook :: Text -> RoomEvent -> Webhook
-webhook url = Webhook url Nothing
+webhook url = Webhook Nothing url Nothing
 
 --------------------------------------------------------------------------------
 

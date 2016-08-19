@@ -2,6 +2,7 @@
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase                 #-}
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE TypeFamilies               #-}
 {-# LANGUAGE TypeOperators              #-}
@@ -13,7 +14,7 @@ module HipChat.Types.Common
   , RoomEvent(..)
   , Token(..)
   , TokenAuth
-  , WebhookAuth(..)
+  , HipchatAuth(..)
   ) where
 
 import           Data.Aeson
@@ -58,13 +59,20 @@ data PaginatedLink = PaginatedLink
 instance FromJSON PaginatedLink where
   parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
-data WebhookAuth = JWT
+data HipchatAuth = JWT
                  | None
-  deriving (Generic, Show)
+  deriving (Generic, Eq, Show)
 
-instance ToJSON WebhookAuth where
+instance ToJSON HipchatAuth where
   toJSON JWT  = String "jwt"
   toJSON None = String "none"
+
+instance FromJSON HipchatAuth where
+  parseJSON = withText "HipchatAuth" $
+    \case
+      "jwt"  -> pure JWT
+      "none" -> pure None
+      x      -> fail (show x <> " is not a valid auth method")
 
 -- | Auth Token
 newtype Token = Token Text

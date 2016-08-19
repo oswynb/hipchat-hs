@@ -16,7 +16,7 @@ data CreateWebhookRequest = CreateWebhookRequest
   { createWebhookRequestName           :: Maybe Text
   , createWebhookRequestUrl            :: Text
   , createWebhookRequestPattern        :: Maybe Text
-  , createWebhookRequestAuthentication :: Maybe WebhookAuth
+  , createWebhookRequestAuthentication :: Maybe HipchatAuth
   , createWebhookRequestKey            :: Maybe WebhookKey
   , createWebhookRequestEvent          :: RoomEvent
   } deriving (Generic, Show)
