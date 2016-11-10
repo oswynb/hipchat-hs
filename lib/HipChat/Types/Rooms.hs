@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE DuplicateRecordFields      #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses      #-}
@@ -22,10 +23,14 @@ module HipChat.Types.Rooms
   , UserItem(..)
   , WebhookKey(..)
   , createWebhookRequest
+  , NotificationColor(..)
+  , SendNotificationRequest(..)
   ) where
 
 import           Data.Aeson
 import           Data.Aeson.Casing
+import           Data.Aeson.Types
+import           Data.Char
 import           Data.String
 import           Data.Text                                 (Text)
 import           GHC.Generics
@@ -57,3 +62,21 @@ data SendMessageResponse = SendMessageResponse
   , id        :: Text
   } deriving (Show, Generic)
 instance FromJSON SendMessageResponse
+
+data NotificationColor = Yellow
+                       | Green
+                       | Red
+                       | Purple
+                       | Gray
+                       | Random
+  deriving (Show, Generic)
+
+instance ToJSON NotificationColor where
+  toJSON = genericToJSON defaultOptions{constructorTagModifier=map toLower}
+
+data SendNotificationRequest = SendNotificationRequest
+  { color   :: NotificationColor
+  , message :: Text
+  } deriving (Generic, Show)
+
+instance ToJSON SendNotificationRequest

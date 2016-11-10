@@ -13,4 +13,4 @@ import           HipChat.Types.API
 hipChatAPI :: Proxy HipChatAPI
 hipChatAPI = Proxy
 
-(sendMessage :<|> createRoom :<|> getRoomStatistics :<|> viewUser :<|> createWebhook :<|> getAllMembers :<|> roomAddonUIUpdate :<|> generateToken) = client hipChatAPI
+(sendMessage :<|> sendNotification :<|> createRoom :<|> getRoomStatistics :<|> viewUser :<|> createWebhook :<|> getAllMembers :<|> roomAddonUIUpdate :<|> generateToken) = client hipChatAPI

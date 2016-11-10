@@ -15,6 +15,7 @@ import           HipChat.Types.User
 
 type HipChatAPI = TokenAuth(
        SendMessage
+  :<|> SendNotification
   :<|> CreateRoom
   :<|> GetRoomStatistics
   :<|> ViewUser
@@ -58,6 +59,13 @@ type SendMessage =
  :> "message"
  :> ReqBody '[JSON] Message
  :> Post '[JSON] SendMessageResponse
+
+type SendNotification =
+    "v2" :> "room"
+ :> Capture "room" Text
+ :> "message"
+ :> ReqBody '[JSON] SendNotificationRequest
+ :> PostNoContent '[JSON] NoContent
 
 type GetRoomStatistics =
     "v2" :> "room"
