@@ -63,7 +63,7 @@ type SendMessage =
 type SendNotification =
     "v2" :> "room"
  :> Capture "room" Text
- :> "message"
+ :> "notification"
  :> ReqBody '[JSON] SendNotificationRequest
  :> PostNoContent '[JSON] NoContent
 

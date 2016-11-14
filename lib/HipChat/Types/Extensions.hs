@@ -168,6 +168,8 @@ data Webhook = Webhook
   { webhookAuthentication :: Maybe HipchatAuth
   , webhookUrl            :: Text
   , webhookPattern        :: Maybe Text
+  , webhookKey            :: Maybe Text
+  , webhookName           :: Maybe Text
   , webhookEvent          :: RoomEvent
   } deriving (Generic, Show, Eq)
 
@@ -178,7 +180,7 @@ instance FromJSON Webhook where
   parseJSON = genericParseJSON (aesonPrefix camelCase){omitNothingFields = True}
 
 webhook :: Text -> RoomEvent -> Webhook
-webhook url = Webhook Nothing url Nothing
+webhook url = Webhook Nothing url Nothing Nothing Nothing
 
 --------------------------------------------------------------------------------
 

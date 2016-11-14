@@ -25,6 +25,7 @@ module HipChat.Types.Rooms
   , createWebhookRequest
   , NotificationColor(..)
   , SendNotificationRequest(..)
+  , MessageFormat(..)
   ) where
 
 import           Data.Aeson
@@ -74,9 +75,19 @@ data NotificationColor = Yellow
 instance ToJSON NotificationColor where
   toJSON = genericToJSON defaultOptions{constructorTagModifier=map toLower}
 
+data MessageFormat = Text
+                   | Html
+  deriving (Show, Eq, Generic)
+
+instance ToJSON MessageFormat where
+  toJSON = genericToJSON (aesonDrop 0 snakeCase){constructorTagModifier=map toLower}
+
 data SendNotificationRequest = SendNotificationRequest
-  { color   :: NotificationColor
-  , message :: Text
+  { messageFormat :: Maybe MessageFormat
+  , notify        :: Maybe Bool
+  , color         :: NotificationColor
+  , message       :: Text
   } deriving (Generic, Show)
 
-instance ToJSON SendNotificationRequest
+instance ToJSON SendNotificationRequest where
+  toJSON = genericToJSON (aesonDrop 0 snakeCase){omitNothingFields = True}

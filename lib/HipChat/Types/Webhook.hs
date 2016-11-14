@@ -9,25 +9,32 @@ import           Data.Aeson.Casing
 import           Data.Text         (Text)
 import           GHC.Generics
 
-data WebhookResponse = WebhookRoomMessageResponse RoomMessageResponse
-
-instance FromJSON WebhookResponse where
-  parseJSON = withObject "WebhookResponse" $ \x -> do
-    ty :: Text <- x .: "event"
-    case ty of
-      "room_message" -> WebhookRoomMessageResponse <$> parseJSON (Object x)
-      _ -> fail "NYI"
-
-data RoomMessageResponse = RoomMessageResponse
-  { rmrItem :: RoomMessageItem
+data WebhookResponse = RoomMessageResponse
+  { rmrEvent :: Text
+  , rmrItem  :: RoomMessageItem
   } deriving (Eq, Generic, Show)
 
-instance FromJSON RoomMessageResponse where
+instance FromJSON WebhookResponse where
   parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
 data RoomMessageItem = RoomMessageItem
-  { rmiMessage :: Text
+  { rmiMessage :: MessageObject
+  , rmiRoom    :: RoomObject
   } deriving (Eq, Generic, Show)
 
 instance FromJSON RoomMessageItem where
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
+
+data MessageObject = MessageObject
+  { moMessage :: Text
+  } deriving (Eq, Generic, Show)
+
+instance FromJSON MessageObject where
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
+
+data RoomObject = RoomObject
+  { roId :: Int
+  } deriving (Eq, Generic, Show)
+
+instance FromJSON RoomObject where
   parseJSON = genericParseJSON $ aesonPrefix snakeCase
