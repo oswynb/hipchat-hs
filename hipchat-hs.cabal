@@ -40,6 +40,8 @@ library
                        HipChat.Types.Rooms.GetAllRoomsResponse
                        -- Other
                        HipChat.Types.RoomAddonUIUpdateRequest
+                       -- Addon support
+                       HipChat.AddonPersistence.Store
   -- other-extensions:
   build-depends:       base >= 4.8 && < 5
                      , aeson >= 0.11
@@ -51,6 +53,7 @@ library
                      , lens
                      , network-uri >= 2.6
                      , postgresql-simple
+                     , resource-pool
                      , servant >= 0.6
                      , servant-client >= 0.6
                      , split
