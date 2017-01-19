@@ -66,9 +66,9 @@ instance HipChatStore Postgres IO where
       void $ case installation of
         Nothing ->
           execute conn "INSERT INTO installations VALUES (?, ?, ?, ?, ?)" reg
-        Just Registration{registrationOauthId=oldId} ->
-          execute conn "UPDATE installations SET oauth_id=?,capabilities_url=?,room_id=?,group_id=?,oauth_secret=? WHERE oauth_id = ?"
-            (reg :. Only oldId)
+        Just Registration{registrationOauthId=oldId} -> do
+          removeInstallationById (PGConn pool) oldId
+          execute conn "INSERT INTO installations VALUES (?, ?, ?, ?, ?)" reg
   removeInstallationById (PGConn pool) oauth_id       = withResource pool $ \conn -> void $ execute conn
     "DELETE FROM installations WHERE oauth_id = ?" (Only oauth_id)
   getInstallationById (PGConn pool) oauth_id       = withResource pool $ \conn -> safeHead <$> query conn
