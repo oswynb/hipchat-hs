@@ -15,6 +15,7 @@ module HipChat.Types.Common
   , Token(..)
   , TokenAuth
   , HipchatAuth(..)
+  , Theme(..)
   ) where
 
 import           Data.Aeson
@@ -89,3 +90,15 @@ newtype IdOrName = IdOrName Text
   deriving (Generic, Show, IsString, ToHttpApiData)
 
 instance FromJSON IdOrName
+
+data Theme = Light
+           | Dark
+
+instance FromHttpApiData Theme where
+  parseQueryParam "light" = Right Light
+  parseQueryParam "dark"  = Right Dark
+  parseQueryParam x       = Left x
+
+instance Show Theme where
+  show Light = "light"
+  show Dark  = "dark"
