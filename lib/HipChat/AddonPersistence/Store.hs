@@ -1,6 +1,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RecordWildCards       #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
 
 module HipChat.AddonPersistence.Store
@@ -10,6 +11,8 @@ module HipChat.AddonPersistence.Store
   , Conf(..)
   ) where
 
+import           Control.Concurrent
+import           Control.Exception
 import           Control.Monad
 import           Data.List
 import           Data.Pool
@@ -47,8 +50,18 @@ instance HipChatStore Postgres IO where
   data Conn Postgres = PGConn (Pool Connection)
   data Conf Postgres = PGConf ConnectInfo
 
-   -- | 1 stripe, 5 second unused connection lifetime, 4 max connections to DB
-  initConnection (PGConf connInfo) = PGConn <$> createPool (connect connInfo) close 1 5 4
+   -- | 4 stripe, 5 second unused connection lifetime, 4 * 8 max connections to DB
+  initConnection (PGConf connInfo) =
+    let retryingConnect = do
+          res <- try $ connect connInfo
+          case res of
+            Left (e :: SomeException) -> do
+              print e
+              putStrLn "Retrying after 1 second..."
+              threadDelay 1000000
+              retryingConnect
+            Right conn -> return conn
+    in PGConn <$> createPool retryingConnect close 4 5 8
   destroyConnection (PGConn pool) = destroyAllResources pool
   initStore (PGConn pool) = withResource pool $ \conn -> void $ execute_ conn hipchatInitSql
   addInstallation (PGConn pool) reg@Registration{..} = withResource pool $ \conn -> case registrationRoomId of
