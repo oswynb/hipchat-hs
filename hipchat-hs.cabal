@@ -49,6 +49,7 @@ library
                      , async
                      , bytestring
                      , either
+                     , http-api-data
                      , http-client
                      , lens
                      , network-uri >= 2.6
