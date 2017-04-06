@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric       #-}
 {-# LANGUAGE OverloadedStrings   #-}
+{-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module HipChat.Types.Webhook where
@@ -7,16 +8,24 @@ module HipChat.Types.Webhook where
 import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
+import           Data.Monoid
 import           Data.Text         (Text)
+import qualified Data.Text         as T
 import           GHC.Generics
 
-data WebhookResponse = RoomMessageResponse
+data WebhookResponse = WebhookResponse
   { event :: Text
   , item  :: WebhookItem
   } deriving (Eq, Generic, Show)
 
 instance FromJSON WebhookResponse where
-  parseJSON = genericParseJSON defaultOptions
+  parseJSON v = flip (withObject "WebhookResponse") v $ \o -> do
+    event <- o .: "event"
+    item <- case event of
+      "room_message"      -> RoomMessageItem'      <$> parseJSON v
+      "room_notification" -> RoomNotificationItem' <$> parseJSON v
+      x -> fail $ "Unsupported webhook type " <> T.unpack x
+    return WebhookResponse{..}
 
 data WebhookItem = RoomMessageItem' RoomMessageItem
                  | RoomNotificationItem' RoomNotificationItem
