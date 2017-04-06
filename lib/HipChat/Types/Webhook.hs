@@ -29,7 +29,7 @@ instance FromJSON WebhookItem where
   parseJSON = genericParseJSON defaultOptions{sumEncoding=UntaggedValue}
 
 data RoomNotificationItem = RoomNotificationItem
-  { rniMessage :: MessageObject
+  { rniMessage :: NotificationObject
   , rniRoom    :: RoomObject
   } deriving (Eq, Generic, Show)
 
@@ -50,17 +50,27 @@ instance ToJSON RoomMessageItem where
 instance FromJSON RoomMessageItem where
   parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
-data MessageObject = MessageObject
-  { moMessage       :: Text
-  , moType          :: Text
-  , moMessageFormat :: Text
-  , moDate          :: Text
+newtype MessageObject = MessageObject
+  { moMessage :: Text
   } deriving (Eq, Generic, Show)
 
 instance ToJSON MessageObject where
   toJSON = genericToJSON $ aesonPrefix snakeCase
 
 instance FromJSON MessageObject where
+  parseJSON = genericParseJSON $ aesonPrefix snakeCase
+
+data NotificationObject = NotificationObject
+  { noMessage       :: Text
+  , noType          :: Text
+  , noMessageFormat :: Text
+  , noDate          :: Text
+  } deriving (Eq, Generic, Show)
+
+instance ToJSON NotificationObject where
+  toJSON = genericToJSON $ aesonPrefix snakeCase
+
+instance FromJSON NotificationObject where
   parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
 newtype RoomObject = RoomObject
