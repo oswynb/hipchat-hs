@@ -21,9 +21,10 @@ data WebhookResponse = WebhookResponse
 instance FromJSON WebhookResponse where
   parseJSON v = flip (withObject "WebhookResponse") v $ \o -> do
     event <- o .: "event"
+    rawItem  <- o .: "item"
     item <- case event of
-      "room_message"      -> RoomMessageItem'      <$> parseJSON v
-      "room_notification" -> RoomNotificationItem' <$> parseJSON v
+      "room_message"      -> RoomMessageItem'      <$> parseJSON rawItem
+      "room_notification" -> RoomNotificationItem' <$> parseJSON rawItem
       x -> fail $ "Unsupported webhook type " <> T.unpack x
     return WebhookResponse{..}
 
