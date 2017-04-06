@@ -9,9 +9,11 @@ import           Data.Aeson
 import           Data.Aeson.Casing
 import           Data.Aeson.Types
 import           Data.Monoid
-import           Data.Text         (Text)
-import qualified Data.Text         as T
+import           Data.Text           (Text)
+import qualified Data.Text           as T
 import           GHC.Generics
+
+import           HipChat.Types.Rooms
 
 data WebhookResponse = WebhookResponse
   { event :: Text
@@ -19,7 +21,7 @@ data WebhookResponse = WebhookResponse
   } deriving (Eq, Generic, Show)
 
 instance FromJSON WebhookResponse where
-  parseJSON v = flip (withObject "WebhookResponse") v $ \o -> do
+  parseJSON = withObject "WebhookResponse" $ \o -> do
     event <- o .: "event"
     rawItem  <- o .: "item"
     item <- case event of
@@ -73,9 +75,10 @@ instance FromJSON MessageObject where
 data NotificationObject = NotificationObject
   { noMessage       :: Text
   , noType          :: Text
-  , noMessageFormat :: Text
+  , noMessageFormat :: MessageFormat
   , noDate          :: Text
   , noFrom          :: Text
+  , noColor         :: NotificationColor
   } deriving (Eq, Generic, Show)
 
 instance ToJSON NotificationObject where

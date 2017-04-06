@@ -70,10 +70,13 @@ data NotificationColor = Yellow
                        | Purple
                        | Gray
                        | Random
-  deriving (Show, Generic)
+  deriving (Show, Eq, Generic)
 
 instance ToJSON NotificationColor where
   toJSON = genericToJSON defaultOptions{constructorTagModifier=map toLower}
+
+instance FromJSON NotificationColor where
+  parseJSON = genericParseJSON defaultOptions{constructorTagModifier=map toLower}
 
 data MessageFormat = Text
                    | Html
@@ -81,6 +84,9 @@ data MessageFormat = Text
 
 instance ToJSON MessageFormat where
   toJSON = genericToJSON (aesonDrop 0 snakeCase){constructorTagModifier=map toLower}
+
+instance FromJSON MessageFormat where
+  parseJSON = genericParseJSON (aesonDrop 0 snakeCase){constructorTagModifier=map toLower}
 
 data SendNotificationRequest = SendNotificationRequest
   { messageFormat :: Maybe MessageFormat
