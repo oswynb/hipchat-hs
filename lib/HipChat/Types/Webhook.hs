@@ -65,6 +65,7 @@ data NotificationObject = NotificationObject
   , noType          :: Text
   , noMessageFormat :: Text
   , noDate          :: Text
+  , noFrom          :: Text
   } deriving (Eq, Generic, Show)
 
 instance ToJSON NotificationObject where
