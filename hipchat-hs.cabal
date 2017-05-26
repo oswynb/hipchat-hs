@@ -34,7 +34,6 @@ library
                        -- Rooms
                        HipChat.Types.Rooms.CreateRoomRequest
                        HipChat.Types.Rooms.CreateRoomResponse
-                       HipChat.Types.Rooms.CreateWebhookRequest
                        HipChat.Types.Rooms.CreateWebhookResponse
                        HipChat.Types.Rooms.GetAllMembersResponse
                        HipChat.Types.Rooms.GetAllRoomsResponse

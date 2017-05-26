@@ -11,7 +11,6 @@ module HipChat.Types.Rooms
   ( CreateRoomRequest(..)
   , CreateRoomResponse(..)
   , CreateRoomResponseLinks(..)
-  , CreateWebhookRequest(..)
   , CreateWebhookResponse(..)
   , CreateWebhookResponseLinks(..)
   , GetAllMembersResponse(..)
@@ -21,11 +20,14 @@ module HipChat.Types.Rooms
   , RoomStatistics(..)
   , SendMessageResponse(..)
   , UserItem(..)
-  , WebhookKey(..)
-  , createWebhookRequest
   , NotificationColor(..)
   , SendNotificationRequest(..)
   , MessageFormat(..)
+  , Card(..)
+  , CardAttribute(..)
+  , CardAttributeValue(..)
+  , CardFormat(..)
+  , CardStyle(..)
   ) where
 
 import           Data.Aeson
@@ -37,9 +39,9 @@ import           Data.Text                                 (Text)
 import           GHC.Generics
 
 import           HipChat.Types.Common
+import           HipChat.Types.Icon
 import           HipChat.Types.Rooms.CreateRoomRequest
 import           HipChat.Types.Rooms.CreateRoomResponse
-import           HipChat.Types.Rooms.CreateWebhookRequest
 import           HipChat.Types.Rooms.CreateWebhookResponse
 import           HipChat.Types.Rooms.GetAllMembersResponse
 import           HipChat.Types.Rooms.GetAllRoomsResponse
@@ -93,7 +95,55 @@ data SendNotificationRequest = SendNotificationRequest
   , notify        :: Maybe Bool
   , color         :: NotificationColor
   , message       :: Text
+  , card          :: Maybe Card
   } deriving (Generic, Show)
 
 instance ToJSON SendNotificationRequest where
-  toJSON = genericToJSON (aesonDrop 0 snakeCase){omitNothingFields = True}
+  toEncoding = genericToEncoding (aesonDrop 0 snakeCase){omitNothingFields = True}
+
+data CardStyle = File
+               | Image
+               | Application
+               | Link
+               | Media
+  deriving (Generic, Show)
+
+instance ToJSON CardStyle where
+  toEncoding = genericToEncoding defaultOptions{constructorTagModifier=map toLower}
+
+data CardFormat = Compact
+                | Medium
+  deriving (Generic, Show)
+
+instance ToJSON CardFormat where
+  toEncoding = genericToEncoding defaultOptions{constructorTagModifier=map toLower}
+
+data CardAttributeValue = CardAttributeValue
+  { url   :: Maybe Text
+  , label :: Text
+  , icon  :: Maybe CompoundIcon
+  } deriving (Generic, Show)
+
+instance ToJSON CardAttributeValue where
+  toEncoding = genericToEncoding (aesonDrop 0 snakeCase){omitNothingFields = True}
+
+data CardAttribute = CardAttribute
+  { label :: Maybe Text
+  , value :: CardAttributeValue
+  } deriving (Generic, Show)
+
+instance ToJSON CardAttribute where
+  toEncoding = genericToEncoding (aesonDrop 0 snakeCase){omitNothingFields = True}
+
+data Card = Card
+  { style      :: CardStyle
+  , format     :: Maybe CardFormat
+  , url        :: Maybe Text
+  , title      :: Text
+  , attributes :: [CardAttribute]
+  , id         :: Text
+  , icon       :: Maybe CompoundIcon
+  } deriving (Generic, Show)
+
+instance ToJSON Card where
+  toEncoding = genericToEncoding (aesonDrop 0 snakeCase){omitNothingFields = True}

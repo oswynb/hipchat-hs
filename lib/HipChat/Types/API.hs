@@ -9,6 +9,7 @@ import           Servant.API
 
 import           HipChat.Types.Auth
 import           HipChat.Types.Common
+import           HipChat.Types.Extensions
 import           HipChat.Types.RoomAddonUIUpdateRequest
 import           HipChat.Types.Rooms
 import           HipChat.Types.User
@@ -49,8 +50,8 @@ type CreateWebhook =
  :> Capture "room_id_or_name" IdOrName
  :> "extension"
  :> "webhook"
- :> Capture "key" WebhookKey
- :> ReqBody '[JSON] CreateWebhookRequest
+ :> Capture "key" Text
+ :> ReqBody '[JSON] Webhook
  :> Put '[JSON] CreateWebhookResponse
 
 type SendMessage =
