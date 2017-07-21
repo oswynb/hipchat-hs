@@ -31,6 +31,7 @@ module HipChat.Types.Rooms
   , CardAttributeValue(..)
   , CardFormat(..)
   , CardStyle(..)
+  , simpleThumbnail
   ) where
 
 import           Data.Aeson
@@ -160,6 +161,9 @@ data Thumbnail = Thumbnail
   , width  :: Maybe Int  -- ^ The original width of the image
   , height :: Maybe Int  -- ^ The original height of the image
   } deriving (Show, Eq)
+
+simpleThumbnail :: Text -> Thumbnail
+simpleThumbnail url = Thumbnail url Nothing Nothing Nothing
 
 instance ToJSON Thumbnail where
   toJSON (Thumbnail _url _url2x _width _height) = object

@@ -8,6 +8,9 @@ import           Data.Aeson
 import           Data.Aeson.Types
 import           Data.Text        (Text)
 
+simpleCompoundIcon :: Text -> CompoundIcon
+simpleCompoundIcon url = CompoundIcon $ Left url
+
 newtype CompoundIcon = CompoundIcon
   { unCompoundIcon :: Either Text Icon
   } deriving Show
