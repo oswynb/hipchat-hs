@@ -25,7 +25,7 @@ import           Data.Monoid
 import           Data.String
 import           Data.Text         (Text)
 import           GHC.Generics
-import           Servant.API
+import           Servant.API hiding (Link)
 
 data RoomEvent = RoomArchived
                | RoomCreated
@@ -44,6 +44,7 @@ instance ToJSON RoomEvent where
 
 instance FromJSON RoomEvent where
   parseJSON = genericParseJSON defaultOptions{constructorTagModifier=camelTo2 '_'}
+
 data Link = Link
   { linkSelf :: Text
   } deriving (Generic, Show)
